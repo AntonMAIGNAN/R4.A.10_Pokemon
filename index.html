@@ -40,22 +40,29 @@
             for (let pokemon of pokemons) {
                 for(let poke_type of pokemon_type){
                     if (pokemon['form']=="Normal" && poke_type['form']=="Normal"){
-                        if (size(pokemon['type'])==2){
-                            type1 = new Type(pokemon['type'][0]);
-                            type2 = new Type(pokemon['type'][1]);
+                        if (pokemon['pokemon_id']==poke_type['pokemon_id']){
+                            if (poke_type['type'].length==2){
+                                let type1 = new Type(poke_type['type'][0]);
+                                let type2 = new Type(poke_type['type'][1]);
 
-                        if (Type.all_types.has(pokemon['type'][0])){
-                            Type.all_types.set(pokemon['type'][0][0], type1);
-                        }
-                        if (Type.all_types.has(pokemon['type'][1])){
-                            Type.all_types.set(pokemon['type'][1][1], type2);
+                                if (!Type.all_types.has(poke_type['type'][0])){
+                                    Type.all_types.set(poke_type['type'][0], type1);
+                                }
+                                if (!Type.all_types.has(poke_type['type'][1])){
+                                    Type.all_types.set(poke_type['type'][1], type2);
+                                }
+                            
+                                this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], type1, type2));
+                            } else{
+                                let type = new Type(poke_type['type'][0]);
+                                if (!Type.all_types.has(poke_type['type'][0])){
+                                    Type.all_types.set(poke_type['type'][0], type);
+                                }
+                                this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], type));
+                            }    
                         }
                         
-                        this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], type1, type2));
-                    } else{
-                        this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], ));
-                    }    
-                }
+                    }
                 }
                 
             }
@@ -74,6 +81,8 @@
         }
     }
 
+    Pokemon.import_pokemon();
+    console.log(Type.all_types);
 </script>
 <body>
     
