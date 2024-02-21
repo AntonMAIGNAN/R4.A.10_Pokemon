@@ -5,14 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le meilleur site Pokemon</title>
 </head>
+<script src="JSON/pokemons.js"></script>
+<script src="JSON/charged_moves.js"></script>
+<script src="JSON/cp_multiplier.js"></script>
+<script src="JSON/fast_moves.js"></script>
+<script src="JSON/generation.js"></script>
+<script src="JSON/pokemon_moves.js"></script>
+<script src="JSON/pokemon_type.js"></script> 
+<script src="JSON/type_effectiveness.js"></script>
+
+<script>
+    class Pokemon{
+        static all_pokemons = new Map();
+
+        constructor (base_attack, base_defense, base_stamina, pokemon_id, pokemon_name, type1, type2=null) {
+            this._form = 'Normal';
+            this._base_attack = base_attack;
+            this._base_defense = base_defense;
+            this._base_stamina = base_stamina;
+            this._pokemon_id = pokemon_id;
+            this._pokemon_name = pokemon_name;
+            this._type1 = type1;
+            if (type2!=null){
+                this._type2 = type2;
+            }
+        }
+
+        toString(){
+            return `--> ID : ${this._pokemon_id} | Name : ${this._pokemon_name} \n 
+            Attaque : ${this._base_attack} | Défense : ${this._base_defense} | Stamina : ${this._base_defense} \n`;
+        }
+
+        static import_pokemon(){
+            for (let pokemon of pokemons) {
+                for(let poke_type of pokemon_type){
+                    if (pokemon['form']=="Normal" && poke_type['form']=="Normal"){
+                        if (size(pokemon['type'])==2){
+                            type1 = new Type(pokemon['type'][0]);
+                            type2 = new Type(pokemon['type'][1]);
+
+                        if (Type.all_types.has(pokemon['type'][0])){
+                            Type.all_types.set(pokemon['type'][0][0], type1);
+                        }
+                        if (Type.all_types.has(pokemon['type'][1])){
+                            Type.all_types.set(pokemon['type'][1][1], type2);
+                        }
+                        
+                        this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], type1, type2));
+                    } else{
+                        this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], ));
+                    }    
+                }
+                }
+                
+            }
+        }
+    }
+
+    class Type{
+        static all_types = new Map();
+
+        constructor(type){
+            this._type = type;
+        }
+
+        toString(){
+            return ` Type : ${this._type} `;
+        }
+    }
+
+</script>
 <body>
-    <script src="charged_moves.js"></script>
-    <script src="cp_multiplier.js"></script>
-    <script src="fast_moves.js"></script>
-    <script src="generation.js"></script>
-    <script src="pokemon_moves.js"></script>
-    <script src="pokemon_type.js"></script>
-    <script src="pokemon.js"></script>
-    <script src="type_effectiveness.js"></script>
+    
 </body>
+
+
+
 </html>

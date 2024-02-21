@@ -6,7 +6,7 @@
 // - pokemon_ID,  
 // - pokemon name.
 
-let pokemon = [
+let pokemons = [
     {
         "base_attack": 118,
         "base_defense": 111,
