@@ -18,7 +18,7 @@
     class Pokemon{
         static all_pokemons = new Map();
 
-        constructor (gen, base_attack, base_defense, base_stamina, pokemon_id, pokemon_name, type1, type2=null, attaques_chargees=null, attaques_rapides=null) {
+        constructor (gen, base_attack, base_defense, base_stamina, pokemon_id, pokemon_name, type1, type2=null, attaques_chargees, attaques_rapides) {
             this._form = 'Normal';
             this._generation = gen;
             this._base_attack = base_attack;
