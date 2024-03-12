@@ -75,19 +75,19 @@
                                         var tab_of_charged_moves = [];
                                         for(let attaque_chargee of pokeMove['charged_moves']){
                                             for(let charged_move of charged_moves){
-                                                if(charged_move['name']==attaque_chargee ||(charged_move['name'].includes(attaque_chargee) )){
-                                                    if((charged_move['type']==type1)||(charged_move['type']==type2)||(charged_move['type']=="Normal")){
-                                                        let atq = null;
-                                                        if (charged_move.hasOwnProperty("critical_chance")){
-                                                            atq = new Attack(charged_move['critical_chance'], charged_move['duration'], charged_move['energy_delta'], charged_move['move_id'], charged_move['name'], charged_move['power'], charged_move['stamina_loss_scaler'], charged_move['type']);
-                                                        } else {
-                                                            atq = new Attack(null, charged_move['duration'], charged_move['energy_delta'], charged_move['move_id'], charged_move['name'], charged_move['power'], charged_move['stamina_loss_scaler'], charged_move['type']);
-                                                        }
-                                                        if (!Attack.all_attacks.has(atq)){
-                                                            Attack.all_attacks.set(atq._move_id, atq);
-                                                        }
-                                                        tab_of_charged_moves.push(atq);
+                                                if(charged_move['name']===attaque_chargee /*||(charged_move['name'].includes(attaque_chargee))*/ ){
+                                                    //if((charged_move['type']==type1)||(charged_move['type']==type2)||(charged_move['type']=="Normal")){
+                                                    let atq = null;
+                                                    if (charged_move.hasOwnProperty("critical_chance")){
+                                                        atq = new Attack(charged_move['critical_chance'], charged_move['duration'], charged_move['energy_delta'], charged_move['move_id'], charged_move['name'], charged_move['power'], charged_move['stamina_loss_scaler'], charged_move['type']);
+                                                    } else {
+                                                        atq = new Attack(null, charged_move['duration'], charged_move['energy_delta'], charged_move['move_id'], charged_move['name'], charged_move['power'], charged_move['stamina_loss_scaler'], charged_move['type']);
                                                     }
+                                                    if (!Attack.all_attacks.has(atq)){
+                                                        Attack.all_attacks.set(atq._move_id, atq);
+                                                    }
+                                                    tab_of_charged_moves.push(atq);
+                                                    //}
                                                 }
                                             }
                                         }
@@ -96,14 +96,14 @@
                                         var tab_of_fast_moves = [];
                                         for(let attaque_rapide of pokeMove['fast_moves']){
                                             for(let fast_move of fast_moves){
-                                                if((fast_move['name']==attaque_rapide)||(fast_move['name'].includes(attaque_rapide))){
-                                                    if((fast_move['type']==type1)||(fast_move['type']==type2)||(fast_move['type']=="Normal")){
-                                                        let atq = new Attack(null, fast_move['duration'], fast_move['energy_delta'], fast_move['move_id'], fast_move['name'], fast_move['power'], fast_move['stamina_loss_scaler'], fast_move['type']);
-                                                        if (!Attack.all_attacks.has(atq)){
-                                                            Attack.all_attacks.set(atq._move_id, atq);
-                                                        }
-                                                        tab_of_fast_moves.push(atq);
+                                                if(fast_move['name']===attaque_rapide/*||(fast_move['name'].includes(attaque_rapide))*/){
+                                                    //if((fast_move['type']==type1)||(fast_move['type']==type2)||(fast_move['type']=="Normal")){
+                                                    let atq = new Attack(null, fast_move['duration'], fast_move['energy_delta'], fast_move['move_id'], fast_move['name'], fast_move['power'], fast_move['stamina_loss_scaler'], fast_move['type']);
+                                                    if (!Attack.all_attacks.has(atq)){
+                                                        Attack.all_attacks.set(atq._move_id, atq);
                                                     }
+                                                    tab_of_fast_moves.push(atq);
+                                                    //}
                                                     
                                                 }
                                             }
