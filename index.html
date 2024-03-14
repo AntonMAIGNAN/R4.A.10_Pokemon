@@ -67,7 +67,7 @@
                                 }
                             }
 
-                            function genererAttaques(type1, type2=null){
+                            function genererAttaques(/*type1, type2=null*/){
                                 // Générer les attaques du pokemon courant
                                 for(let pokeMove of pokemon_moves){
                                     if(pokeMove['pokemon_id']==pokemon["pokemon_id"]){
@@ -126,7 +126,7 @@
                                     Type.all_types.set(poke_type['type'][1], type2);
                                 }
                                 
-                                let attaques = genererAttaques(type1, type2);
+                                let attaques = genererAttaques(/*type1, type2*/);
 
                                 this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(generationDuPokemon, pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], type1, type2, attaques[0], attaques[1]));
                             } else{
@@ -135,7 +135,7 @@
                                     Type.all_types.set(poke_type['type'][0], type);
                                 }
 
-                                let attaques = genererAttaques(type);
+                                let attaques = genererAttaques(/*type*/);
                                 this.all_pokemons.set(pokemon['pokemon_id'] ,new Pokemon(generationDuPokemon, pokemon['base_attack'], pokemon['base_defense'], pokemon['base_stamina'], pokemon['pokemon_id'], pokemon['pokemon_name'], type, null, attaques[0], attaques[1]));
                             }    
                         }
