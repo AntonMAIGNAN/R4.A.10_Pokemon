@@ -1,0 +1,13 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.input{
+    margin: 15px;
+}
+
+li{
+    list-style: none;
+    margin: 5px 15px;
+}

@@ -129,6 +129,46 @@ function getStrongestEnemies(attack){
     return new Map(StrongestEnemies);
 }
 
+function getBestAttackTypesForEnemy(name){
+    var bestAttacks = [];
+    let bestCoeff = 0;
+    let sesTypes= [];
+
+    // Trouver le pokémon et ainsi définir ses types.
+    for(let pokemon of Pokemon.all_pokemons){
+        if(pokemon._pokemon_name == name){
+            sesTypes = pokemon.getTypes();
+            break;
+        }
+    }
+
+    // Boucle pour déterminer le plus gros coeff de dégat pour les types du pokemons.
+    for(let attack of Attack.all_attacks){
+        let coeffDegat = 1;
+        for(let type of sesTypes){
+            coeffDegat *= attack._effectiveness.get(type);
+        }
+        // Détermine le plus gros coeff.
+        if (coeffDegat > bestCoeff){
+            bestCoeff = coeffDegat
+        }
+    }
+    // Grace au 'bestCoeff' déterminé précédemment, on peut trouver toutes les attaques efficaces.
+    for(let attack of Attack.all_attacks){
+        let coeffDegat = 1;
+        for(let type of sesTypes){
+            coeffDegat *= attack._effectiveness.get(type);
+        }
+        // On compare le coeff de chaque attaque avec le best pour savoir si elle est efficace.
+        if (coeffDegat==bestCoeff){
+            // On les ajoutes au tableau.
+            bestAttacks.push(attack);
+        }
+    }
+
+    return bestAttacks;
+}
+
 //console.log(getPokemonsByAttack("Struggle"));
 //console.log(getPokemonsByType("Bug"));
 

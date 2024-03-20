@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test des fonctions</title>
+    <!-- les datas des JSONS -->
+    <script src="../data/pokemons.js"></script>
+    <script src="../data/charged_moves.js"></script>
+    <script src="../data/cp_multiplier.js"></script>
+    <script src="../data/fast_moves.js"></script>
+    <script src="../data/generation.js"></script>
+    <script src="../data/pokemon_moves.js"></script>
+    <script src="../data/pokemon_type.js"></script> 
+    <script src="../data/type_effectiveness.js"></script>
+    <!-- Nos classes -->
+    <script src="../data/class_attack.js"></script>
+    <script src="../data/class_type.js"></script>
+    <script src="../data/class_pokemon.js"></script>
+    <!-- le script contenant nos fonctions -->
+    <script src="test.js" defer></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <script defer> Pokemon.import_pokemon(); </script>
+    <div class="input">
+        <input type="text" id="input0"></input>
+    </div>
+    
+    <script>var input = document.getElementById("input0");</script>
+    
+    <ul>
+        <li>
+            <a id="ptype" href="#">Liste des Pokemon par type (le type en argument sera "<span class="monTexte"></span>")</a>
+        </li>
+        <li>
+            <a id="pattack" href="#">Liste des Pokemon par attaque (le nom de l'attaque en argument sera "<span class="monTexte"></span>")</a>
+        </li>
+        <li>
+            <a id="atype" href="#">Liste des attaques par type (le type en argument sera "<span class="monTexte"></span>")</a>
+        </li>
+    </ul>
+    
+    <script defer>
+        input.addEventListener("input", function(){
+            let monSpans = document.querySelectorAll(".monTexte");
+            monSpans.forEach(function(span) {
+                span.textContent = input.value; 
+            });
+        });
+
+        ptype.addEventListener("click", () => {
+            for (let pokemon of getPokemonsByType(input.value)){
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    // Le navigateur est en mode sombre
+                    console.log(`%c ${pokemon._pokemon_name} ↓`, "color: lightskyblue;");
+                } else {
+                    // Le navigateur est en mode clair
+                    console.log(`%c ${pokemon._pokemon_name} ↓`, "color: darkblue;");
+                }
+                console.table(pokemon.getTypes())
+                console.log("\n\n")
+            }
+        });
+
+        pattack.addEventListener("click", () => {
+            for (let pokemon of getPokemonsByAttack(input.value)){
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    // Le navigateur est en mode sombre
+                    console.log(`%c ${pokemon._pokemon_name} ↓`, "color: lightskyblue;");
+                } else {
+                    // Le navigateur est en mode clair
+                    console.log(`%c ${pokemon._pokemon_name} ↓`, "color: darkblue;");
+                }
+                console.table(pokemon.getAttacks())
+                console.log("\n\n")
+            }
+        });
+
+        atype.addEventListener("click", () => {
+            for (let attack of getAttacksByType(input.value)){
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    // Le navigateur est en mode sombre
+                    console.log(`%c ${attack._name} ↓`, "color: lightskyblue;");
+                } else {
+                    // Le navigateur est en mode clair
+                    console.log(`%c ${attack._name} ↓`, "color: darkblue;");
+                }
+                console.table(attack._type)
+                console.log("\n\n")
+            }
+        });
+    </script>
+    
+</body>
+</html>
