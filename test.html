@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test des fonctions</title>
+    <script src="data/pokemons.js"></script>
+    <script src="data/charged_moves.js"></script>
+    <script src="data/cp_multiplier.js"></script>
+    <script src="data/fast_moves.js"></script>
+    <script src="data/generation.js"></script>
+    <script src="data/pokemon_moves.js"></script>
+    <script src="data/pokemon_type.js"></script> 
+    <script src="data/type_effectiveness.js"></script>
+
+    <script src="data/class_attack.js"></script>
+    <script src="data/class_type.js"></script>
+    <script src="data/class_pokemon.js"></script>
+    
+
+    <script src="test.js" defer></script>
+</head>
+<body>
+    <script defer> Pokemon.import_pokemon(); </script>
+    <input type="text" id="input0"></input> <a href="">reset</a>
+    
+    <script>var input = document.getElementById("input0");</script>
+    
+    <p>
+        <a id="ptype" href="#">Liste des Pokemon par type</a>
+    </p>
+    <p>
+        <a id="pattack" href="#">Liste des Pokemon par attaque</a>
+    </p>
+
+    <p>
+        <a id="atype" href="#">Liste des attaques par types</a>
+    </p>
+
+    
+
+    <script defer>
+  /*       input.addEventListener("change", function(){
+            var tes1 = document.getElementsByClassName("input");
+            tes1.textContent = input.value; 
+        }); */
+
+        ptype.addEventListener("click", () => {
+            //console.table(getPokemonsByType(input.value));
+            for (let pokemon of getPokemonsByType(input.value)){
+                console.log(pokemon._pokemon_name + "↓")
+                console.table(pokemon.getTypes())
+                console.log("\n\n")
+            }
+        });
+
+        pattack.addEventListener("click", () => {
+            for (let pokemon of getPokemonsByAttack(input.value)){
+                console.log("\n\n")
+                console.log(pokemon._pokemon_name + " ↓")
+                console.table(pokemon.getAttacks())
+                console.log("\n\n")
+            }
+        });
+
+        atype.addEventListener("click", () => {
+            for (let attack of getAttacksByType(input.value)){
+                console.log("\n\n")
+                console.log( `%c ${attack._name} ↓`, "color:lightblue;")
+                console.table(attack._type)
+                console.log("\n\n")
+            }
+        });
+    </script>
+    
+</body>
+</html>
