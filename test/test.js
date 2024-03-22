@@ -1,7 +1,5 @@
-
-
 function getPokemonsByType(typeName){
-    pokemonByType = [];
+    let pokemonByType = [];
     for(let [id, pokemon] of Pokemon.all_pokemons){
         for(let type of pokemon.getTypes()){
             if(type == typeName){
@@ -13,7 +11,7 @@ function getPokemonsByType(typeName){
 }
 
 function getPokemonsByAttack(attackName){
-    pokemonsByAttack = [];
+    let pokemonsByAttack = [];
     for(let [id, pokemon] of Pokemon.all_pokemons){
         for(let atq of pokemon.getAttacks()){
             if (atq._name==attackName){
@@ -25,7 +23,7 @@ function getPokemonsByAttack(attackName){
 }
 
 function getAttacksByType(typeName){
-    attacksByType = [];
+    let attacksByType = [];
     for(let [id, atq] of Attack.all_attacks){
         if (atq._type==typeName){
             attacksByType.push(atq);
@@ -36,7 +34,7 @@ function getAttacksByType(typeName){
 
 function sortPokemonByName(){
     let copie = new Map(Pokemon.all_pokemons);
-    pokemonByName = Array.from(copie.entries()).sort(function compare(a ,b){
+    let pokemonByName = Array.from(copie.entries()).sort(function compare(a ,b){
         if (a[1]._pokemon_name < b[1]._pokemon_name)
             return -1;
         if (a[1]._pokemon_name > b[1]._pokemon_name)
@@ -48,7 +46,7 @@ function sortPokemonByName(){
 
 function sortPokemonByStamina(){
     let copie = new Map(Pokemon.all_pokemons);
-    pokemonByStamina = Array.from(copie.entries()).sort(function compare(a, b) {
+    let pokemonByStamina = Array.from(copie.entries()).sort(function compare(a, b) {
         if (a[1]._base_stamina > b[1]._base_stamina)
             return -1;
         if (a[1]._base_stamina < b[1]._base_stamina )
@@ -61,7 +59,7 @@ function sortPokemonByStamina(){
 
 function getWeakestEnemies(attack){
     let copie = new Map(Pokemon.all_pokemons);
-    WeakestEnemies = Array.from(copie.entries()).sort(function compare(a, b) {
+    let WeakestEnemies = Array.from(copie.entries()).sort(function compare(a, b) {
         let typesA = a[1].getTypes();
         let typesB = b[1].getTypes();
         let typeAtq = attack._type;
@@ -94,9 +92,59 @@ function getWeakestEnemies(attack){
     return new Map(WeakestEnemies);
 }
 
+// Elle s'appuie sur getWeakestEnemies() pour avoir le tableau trié du moins résistant au plus résistant selon une attaque donnée.
+function getWeakestEnemies2(attackName){
+    let weakestEnemies = [];
+    let attack = null;
+
+    // On cherche l'objet Attack en question via le nom en argument.
+    for(let [id,atq] of Attack.all_attacks){
+        if (atq._name == attackName){
+            attack = atq;
+            break;
+        }
+    }
+
+    if (attack !=null){
+        // On trie les pokemons du moins au plus résistant par rapport à cette attaque.
+        let sortedTab = getWeakestEnemies(attack);
+        
+        // On cherche le coeff le moins efficace avec ses attaques.
+        let typeAtq = attack._type;
+        let coeffLeMoinsEffficace = 1;
+        let poke1 = null;
+
+        for(let [id, pokemon] of sortedTab){
+            poke1 = pokemon;
+            break;
+        }
+
+        for (let type of poke1.getTypes()){
+            coeffLeMoinsEffficace *= typeAtq._effectiveness.get(type._type);
+        }
+        
+        // On parcourt les pokémons triés selon la résistance. 
+        // On les ajoute au tableau tant que leur coeff est égal a 'coeffLeMoinsEffficace'.
+        let sonCoeff;
+        for(let [id,pokemon] of sortedTab){
+            sonCoeff = 1;
+            for (let type of pokemon.getTypes()){
+                sonCoeff *= typeAtq._effectiveness.get(type._type);
+            }
+            if (sonCoeff==coeffLeMoinsEffficace){
+                weakestEnemies.push(pokemon);
+            } else {
+                break;
+            }
+        }
+    }
+    
+    return weakestEnemies;
+}
+
 function getStrongestEnemies(attack){
     let copie = new Map(Pokemon.all_pokemons);
-    StrongestEnemies = Array.from(copie.entries()).sort(function compare(a, b) {
+    let StrongestEnemies = Array.from(copie.entries()).sort(function compare(a, b) {
         let typesA = a[1].getTypes();
         let typesB = b[1].getTypes();
         let typeAtq = attack._type;
@@ -166,8 +214,18 @@ function getBestAttackTypesForEnemy(name){
         }
     }
 
-    return bestAttacks;
+    //
+    let tabTypes = [];
+    for(let [id,attack] of bestAttacks){
+        if (!(tabTypes.find(Type => Type._name == type._name))){
+            tabTypes.push(attack._type);
+        }
+    }
+
+    return tabTypes;
 }
+
+
 
 //console.log(getPokemonsByAttack("Struggle"));
 //console.log(getPokemonsByType("Bug"));
