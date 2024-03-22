@@ -23,23 +23,33 @@
 </head>
 <body>
     <script defer> Pokemon.import_pokemon(); </script>
-    <div class="input">
-        <input type="text" id="input0"></input>
+
+    <img src="../logo_pokemon.png" alt="Pokemon">
+
+    <div class="box">
+        <div class="input">
+            <p>Votre argument : </p>
+            <input type="text" id="input0"></input>
+        </div>
+        
+        <script>var input = document.getElementById("input0");</script>
+        
+        <ul>
+            <li>
+                <a id="ptype" href="#">Liste des Pokemon par type (le type en argument sera "<span class="monTexte"></span>")</a>
+            </li>
+            <li>
+                <a id="pattack" href="#">Liste des Pokemon par attaque (le nom de l'attaque en argument sera "<span class="monTexte"></span>")</a>
+            </li>
+            <li>
+                <a id="atype" href="#">Liste des attaques par type (le type en argument sera "<span class="monTexte"></span>")</a>
+            </li>
+            <li>
+                <a id="psort" href="#">Liste des pokemons triés dans l'ordre alaphabétique<span class="monTexte"></span></a>
+
+                        </li>
+        </ul>
     </div>
-    
-    <script>var input = document.getElementById("input0");</script>
-    
-    <ul>
-        <li>
-            <a id="ptype" href="#">Liste des Pokemon par type (le type en argument sera "<span class="monTexte"></span>")</a>
-        </li>
-        <li>
-            <a id="pattack" href="#">Liste des Pokemon par attaque (le nom de l'attaque en argument sera "<span class="monTexte"></span>")</a>
-        </li>
-        <li>
-            <a id="atype" href="#">Liste des attaques par type (le type en argument sera "<span class="monTexte"></span>")</a>
-        </li>
-    </ul>
     
     <script defer>
         input.addEventListener("input", function(){
@@ -89,6 +99,9 @@
                 console.table(attack._type)
                 console.log("\n\n")
             }
+        });
+        psort.addEventListener("click", () => {
+            console.table(sortPokemonByName());
         });
     </script>
     
