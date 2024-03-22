@@ -6,25 +6,33 @@
 .input{
     margin: 15px;
     display: flex;
-    justify-content: space-evenly;
+}
+
+.input > input{
+    margin: 0 15px;
 }
 
 li{
     list-style: none;
-    margin: 5px 15px;
+    margin: 20px 15px;
 }
 
 .box{
     background-color: white;
     padding: 20px;
-    border: 1px solid;
-    width: 500px;
-    margin: 15px;
+    border: 3px solid #FFCB05;
+    margin: 20px 20px;
 }
 
 body{
     display: flex;
     flex-direction: column;
+    background-color: #3C5BA6;
+}
+
+.image-conteneur{
+    display: flex;
+    justify-content: center;
 }
 
 img{
@@ -32,3 +40,4 @@ img{
     height: 150px;
     margin: 15px;
 }
+
