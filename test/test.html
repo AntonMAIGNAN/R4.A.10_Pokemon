@@ -113,7 +113,7 @@
         });
 
         psortn.addEventListener("click", () => {
-            for (let pokemon of sortPokemonByName()){
+            for (let [id, pokemon] of sortPokemonByName()){
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     // Le navigateur est en mode sombre
                     console.log(`%c ${pokemon._pokemon_name} ↓`, "color: lightskyblue;");
@@ -126,7 +126,7 @@
         });
 
         psorts.addEventListener("click", () => {
-            for (let pokemon of sortPokemonByStamina()){
+            for (let [id, pokemon] of sortPokemonByStamina()){
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     // Le navigateur est en mode sombre
                     console.log(`%c ${pokemon._pokemon_name} ↓`, "color: lightskyblue;");

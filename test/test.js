@@ -217,7 +217,7 @@ function getBestAttackTypesForEnemy(name){
     //
     let tabTypes = [];
     for(let [id,attack] of bestAttacks){
-        if (!(tabTypes.find(Type => Type._name == type._name))){
+        if (!(tabTypes.find(Type => Type._name == attack._type._name))){
             tabTypes.push(attack._type);
         }
     }
