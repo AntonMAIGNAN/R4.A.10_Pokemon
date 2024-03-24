@@ -177,7 +177,7 @@ function getStrongestEnemies(attack){
     return new Map(StrongestEnemies);
 }
 
-function getBestAttackTypesForEnemy(name){
+/*function getBestAttackTypesForEnemy(name){
     var bestAttacks = [];
     let bestCoeff = 0;
     let sesTypes= [];
@@ -191,51 +191,77 @@ function getBestAttackTypesForEnemy(name){
     }
 
     // Boucle pour déterminer le plus gros coeff de dégat pour les types du pokemons.
-    for(let attack of Attack.all_attacks){
+    for (let [id, attack] of Attack.all_attacks) {
         let coeffDegat = 1;
-        for(let type of sesTypes){
-            coeffDegat *= attack._effectiveness.get(type);
+        for (let type of sesTypes) {
+            let typeEffectiveness = attack._type._effectiveness.get(type._type);
+            if (typeEffectiveness !== undefined) {
+                coeffDegat *= typeEffectiveness;
+            }
         }
         // Détermine le plus gros coeff.
-        if (coeffDegat > bestCoeff){
-            bestCoeff = coeffDegat
-        }
-    }
-    // Grace au 'bestCoeff' déterminé précédemment, on peut trouver toutes les attaques efficaces.
-    for(let attack of Attack.all_attacks){
-        let coeffDegat = 1;
-        for(let type of sesTypes){
-            coeffDegat *= attack._effectiveness.get(type);
-        }
-        // On compare le coeff de chaque attaque avec le best pour savoir si elle est efficace.
-        if (coeffDegat==bestCoeff){
-            // On les ajoutes au tableau.
+        if (coeffDegat > bestCoeff) {
+            bestCoeff = coeffDegat;
+            // Remplacer les attaques précédentes par celle-ci, car elle est plus efficace
+            bestAttacks = [attack];
+        } else if (coeffDegat == bestCoeff) {
+            // Si l'attaque a le même coefficient de dégât total que le bestCoeff, ajouter à la liste
             bestAttacks.push(attack);
         }
     }
 
-    //
     let tabTypes = [];
-    for(let [id,attack] of bestAttacks){
-        if (!(tabTypes.find(Type => Type._name == type._name))){
-            tabTypes.push(attack._type);
+    for (let attack of bestAttacks) {
+        let typeName = attack._type._type;
+        if (!tabTypes.includes(typeName)) {
+            tabTypes.push(typeName);
+        }
+    }    
+
+    return tabTypes;
+}*/
+
+
+function getBestAttackTypesForEnemy(name){
+    let sesTypes = null;
+    let bestCoeff = 0;
+    let bestAttackTypesSet = new Set();
+
+    // Trouver le pokémon et ainsi définir ses types.
+    for (let [id,pokemon] of Pokemon.all_pokemons){
+        if (pokemon._pokemon_name == name){
+            sesTypes = pokemon.getTypes();
+            break;
         }
     }
 
-    return tabTypes;
+    if (!sesTypes) {
+        console.log("Pokemon not found.");
+        return [];
+    }
+
+    // Boucle pour déterminer le plus gros coeff de dégat pour les types du pokemons.
+    for (let [id, attack] of Attack.all_attacks){
+        let coeffDegat = 1;
+        for (let type of sesTypes){
+            let typeEffectiveness = attack._type._effectiveness.get(type._type);
+            if (typeEffectiveness !== undefined) {
+                coeffDegat *= typeEffectiveness;
+            }
+        }
+        
+        // Si le coefficient de dégât est supérieur, mettre à jour les attaques les plus efficaces
+        if (coeffDegat > bestCoeff){
+            bestCoeff = coeffDegat;
+            bestAttackTypesSet = new Set([attack._type._type]);
+        } else if (coeffDegat == bestCoeff) {
+            // Si le coefficient de dégât est égal, ajouter ce type d'attaque aux attaques les plus efficaces
+            bestAttackTypesSet.add(attack._type._type);
+        }
+    }
+
+    // Convertir l'ensemble en tableau et le retourner
+    return Array.from(bestAttackTypesSet);
 }
 
 
-
-//console.log(getPokemonsByAttack("Struggle"));
-//console.log(getPokemonsByType("Bug"));
-
-/*let tab = getAttacksByType("Fire");
-for(let atq of tab){
-    console.log(`${atq._name} -> ${atq._type}`);
-}*/
-//console.log(sortPokemonByName());
-//console.log(sortPokemonByStamina());
-//console.log(Attack.all_attacks);
-//console.log(getWeakestEnemies(Attack.all_attacks.get(90)));
-//console.log(getStrongestEnemies(Attack.all_attacks.get(90)));

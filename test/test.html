@@ -113,7 +113,7 @@
         });
 
         psortn.addEventListener("click", () => {
-            for (let pokemon of sortPokemonByName()){
+            for (let [id, pokemon] of sortPokemonByName()){
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     // Le navigateur est en mode sombre
                     console.log(`%c ${pokemon._pokemon_name} ↓`, "color: lightskyblue;");
@@ -122,11 +122,12 @@
                     console.log(`%c ${pokemon._pokemon_name} ↓`, "color: darkblue;");
                 }
                 console.table(pokemon);
+                console.log("\n\n")
             }
         });
 
         psorts.addEventListener("click", () => {
-            for (let pokemon of sortPokemonByStamina()){
+            for (let [id, pokemon] of sortPokemonByStamina()){
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     // Le navigateur est en mode sombre
                     console.log(`%c ${pokemon._pokemon_name} ↓`, "color: lightskyblue;");
@@ -154,17 +155,7 @@
         });      
         
         sattack.addEventListener("click", () => {
-            for (let type of getBestAttackTypesForEnemy(input.value)){
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    // Le navigateur est en mode sombre
-                    console.log(`%c ${type._type} ↓`, "color: lightskyblue;");
-                } else {
-                    // Le navigateur est en mode clair
-                    console.log(`%c ${type._type} ↓`, "color: darkblue;");
-                }
-                console.table(type);
-                console.log("\n\n")
-            }
+            console.table(getBestAttackTypesForEnemy(input.value));
         }); 
         
     </script>
