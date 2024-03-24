@@ -177,51 +177,6 @@ function getStrongestEnemies(attack){
     return new Map(StrongestEnemies);
 }
 
-/*function getBestAttackTypesForEnemy(name){
-    var bestAttacks = [];
-    let bestCoeff = 0;
-    let sesTypes= [];
-
-    // Trouver le pokémon et ainsi définir ses types.
-    for(let pokemon of Pokemon.all_pokemons){
-        if(pokemon._pokemon_name == name){
-            sesTypes = pokemon.getTypes();
-            break;
-        }
-    }
-
-    // Boucle pour déterminer le plus gros coeff de dégat pour les types du pokemons.
-    for (let [id, attack] of Attack.all_attacks) {
-        let coeffDegat = 1;
-        for (let type of sesTypes) {
-            let typeEffectiveness = attack._type._effectiveness.get(type._type);
-            if (typeEffectiveness !== undefined) {
-                coeffDegat *= typeEffectiveness;
-            }
-        }
-        // Détermine le plus gros coeff.
-        if (coeffDegat > bestCoeff) {
-            bestCoeff = coeffDegat;
-            // Remplacer les attaques précédentes par celle-ci, car elle est plus efficace
-            bestAttacks = [attack];
-        } else if (coeffDegat == bestCoeff) {
-            // Si l'attaque a le même coefficient de dégât total que le bestCoeff, ajouter à la liste
-            bestAttacks.push(attack);
-        }
-    }
-
-    let tabTypes = [];
-    for (let attack of bestAttacks) {
-        let typeName = attack._type._type;
-        if (!tabTypes.includes(typeName)) {
-            tabTypes.push(typeName);
-        }
-    }    
-
-    return tabTypes;
-}*/
-
-
 function getBestAttackTypesForEnemy(name){
     let sesTypes = null;
     let bestCoeff = 0;
