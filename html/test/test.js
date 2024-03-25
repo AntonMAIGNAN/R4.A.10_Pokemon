@@ -82,9 +82,9 @@ function getWeakestEnemies(attack){
             calculEffectivenessB = typeAtq._effectiveness.get(typesB[0]._type);
         }
             
-        if (calculEffectivenessA < calculEffectivenessB)
-            return -1;
         if (calculEffectivenessA > calculEffectivenessB)
+            return -1;
+        if (calculEffectivenessA < calculEffectivenessB)
             return 1;
         return 0;
         
