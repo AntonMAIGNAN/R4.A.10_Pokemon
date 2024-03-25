@@ -1,6 +1,6 @@
 *{
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 table {
@@ -19,13 +19,14 @@ table {
   
   thead,
   tfoot {
-    background-color: rgb(228 240 245);
+    background-color: rgb(190, 245, 169);
   }
   
   th,
   td {
-    border: 1px solid rgb(160 160 160);
+    border: 1px solid rgb(160, 160, 160);
     padding: 8px 10px;
+    text-align: center;
   }
   
   td:last-of-type {
@@ -33,7 +34,7 @@ table {
   }
   
   tbody > tr:nth-of-type(even) {
-    background-color: rgb(255, 213, 99);
+    background-color: rgb(236, 250, 211);
   }
   
   tfoot th {
