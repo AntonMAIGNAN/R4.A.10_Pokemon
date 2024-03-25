@@ -7,49 +7,56 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <table>
-        <thead>
-            <th>ID</th>
-            <th>NOM</th>
-            <th>GÉNÉRATION</th>
-            <th>TYPES</th>
-            <th>ENDURANCE</th>
-            <th>ATTAQUE</th>
-            <th>DÉFENSE</th>
-            <th>IMAGE</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td>N°1</td>
-                <td>Bulbasaur</td>
-                <td>Gen 1</td>
-                <td>Grass & Poison</td>
-                <td>128 PV</td>
-                <td>118 ATK</td>
-                <td>111 DEF</td>
-                <td><img src="../webp/images/001.webp" alt="pokemon" width="50px" height="50px"></td>
-            </tr>
-            <tr>
-                <td>N°2</td>
-                <td>Ivysaur</td>
-                <td>Gen 1</td>
-                <td>Grass & Poison</td>
-                <td>155 PV</td>
-                <td>151 ATK</td>
-                <td>143 DEF</td>
-                <td><img src="../webp/images/002.webp" alt="pokemon" width="50px" height="50px"></td>
-            </tr>
-            <tr>
-                <td>N°3</td>
-                <td>Venusaur</td>
-                <td>Gen 1</td>
-                <td>Grass & Poison</td>
-                <td>190 PV</td>
-                <td>198 ATK</td>
-                <td>189 DEF</td>
-                <td><img src="../webp/images/003.webp" alt="pokemon" width="50px" height="50px"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="image-conteneur">
+        <img src="../test/logo_pokemon.png" alt="Pokemon">
+    </div>
+
+    <div class="listePokemon">
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>NOM</th>
+                <th>GÉNÉRATION</th>
+                <th>TYPES</th>
+                <th>ENDURANCE</th>
+                <th>ATTAQUE</th>
+                <th>DÉFENSE</th>
+                <th>IMAGE</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="ID">N°1</td>
+                    <td data-label="NOM">Bulbasaur</td>
+                    <td data-label="GÉNÉRATION">Gen 1</td>
+                    <td data-label="TYPES">Grass & Poison</td>
+                    <td data-label="ENDURANCE">128 PV</td>
+                    <td data-label="ATTAQUE">118 ATK</td>
+                    <td data-label="DÉFENSE">111 DEF</td>
+                    <td data-label="IMAGE"><img src="../webp/images/001.webp" alt="pokemon" width="50px" height="50px"></td>
+                </tr>
+                <tr>
+                    <td data-label="ID">N°2</td>
+                    <td data-label="NOM">Ivysaur</td>
+                    <td data-label="GÉNÉRATION">Gen 1</td>
+                    <td data-label="TYPES">Grass & Poison</td>
+                    <td data-label="ENDURANCE">155 PV</td>
+                    <td data-label="ATTAQUE">151 ATK</td>
+                    <td data-label="DÉFENSE">143 DEF</td>
+                    <td data-label="IMAGE"><img src="../webp/images/002.webp" alt="pokemon" width="50px" height="50px"></td>
+                </tr>
+                <tr>
+                    <td data-label="ID">N°3</td>
+                    <td data-label="NOM">Venusaur</td>
+                    <td data-label="GÉNÉRATION">Gen 1</td>
+                    <td data-label="TYPES">Grass & Poison</td>
+                    <td data-label="ENDURANCE">190 PV</td>
+                    <td data-label="ATTAQUE">198 ATK</td>
+                    <td data-label="DÉFENSE">189 DEF</td>
+                    <td data-label="IMAGE"><img src="../webp/images/003.webp" alt="pokemon" width="50px" height="50px"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
 </body>
 </html>
