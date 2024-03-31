@@ -100,7 +100,7 @@ function verifDesactivation(page){
 // Afficher dans mon SPAN #page : le numéro de la page courante.
 function afficherNombrePage(page){
     let textContainer = document.getElementById("page");
-    textContainer.textContent = `Page n°${page}`;
+    textContainer.textContent = `${page} / ${maxPage}`;
 }
 
 // Initialisation de la PAGE n°1
