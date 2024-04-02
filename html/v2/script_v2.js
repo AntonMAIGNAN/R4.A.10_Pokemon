@@ -61,17 +61,15 @@ function displayPokemons(page) {
         illustration.setAttribute('data-label', "IMAGE");
         let source = "";
         if (parseInt(pokemon._pokemon_id) < 10){
-            source = "../webp/images/00" + pokemon._pokemon_id + ".webp";
+            source = "../webp/thumbnails/00" + pokemon._pokemon_id + ".webp";
             img.setAttribute('src', source);
         } else if (parseInt(pokemon._pokemon_id) < 100){
-            source = "../webp/images/0" + pokemon._pokemon_id + ".webp";
+            source = "../webp/thumbnails/0" + pokemon._pokemon_id + ".webp";
             img.setAttribute('src', source);
         } else {
-            source = "../webp/images/" + pokemon._pokemon_id + ".webp";
+            source = "../webp/thumbnails/" + pokemon._pokemon_id + ".webp";
             img.setAttribute('src', source);
         }
-        img.setAttribute("height", "50px");
-        img.setAttribute("width", "50px");
         illustration.appendChild(img);
         row.appendChild(illustration);
         

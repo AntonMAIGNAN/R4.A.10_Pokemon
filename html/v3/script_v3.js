@@ -72,11 +72,9 @@ function displayPokemons(page) {
         }
         img.setAttribute("class", "pokeImage");
         illustration.appendChild(img);
-        row.appendChild(illustration);
+        row.appendChild(illustration);  
 
-        row.setAttribute("class", "rowClick");       
-        tbody.appendChild(row);
-
+        // Tooltip servant à afficher les images.
         const mesPokeImages = Array.from(document.getElementsByClassName("pokeImage"));
         for (let pokeImage of mesPokeImages) {
             pokeImage.addEventListener("mouseover", function(event) {
@@ -103,57 +101,42 @@ function displayPokemons(page) {
             });
         }
 
-        // Créer la popup pour cette ligne
-        /*row.addEventListener("click", function(event) {
-            // Fermer la popup active, s'il y en a une
-            fermerPopupActive();
+        // Popup
+        var popup = document.createElement("div");
+        popup.classList.add("popup");
 
-            let popup = document.createElement("div");
-            popup.classList.add("popup");
+        var fastAtk = document.createElement("h2");
+        fastAtk.textContent = "Attaques rapides :";
+        var listFastAtk = document.createElement("ul");
+        for(let fastMove of pokemon._fast_moves){
+            let elem = document.createElement("li");
+            elem.textContent = fastMove._name;
+            listFastAtk.appendChild(elem);
+        }
 
-            let popupTitle = document.createElement("h2");
-            popupTitle.textContent = `${pokemon._pokemon_name} (N°${pokemon._pokemon_id})`;
-            popup.appendChild(popupTitle);
+        popup.appendChild(fastAtk);
+        popup.appendChild(listFastAtk);
 
-            let generationInfo = document.createElement("p");
-            generationInfo.textContent = `Génération: ${pokemon._generation}`;
-            popup.appendChild(generationInfo);
+        var chargedAtk = document.createElement("h2");
+        chargedAtk.textContent = "Attaques chargées :";
+        var listChargedMoves = document.createElement("ul");
+        for(let chargedMove of pokemon._charged_moves){
+            let elem = document.createElement("li");
+            elem.textContent = chargedMove._name;
+            listChargedMoves.appendChild(elem);
+        }
 
-            let typesInfo = document.createElement("p");
-            typesInfo.textContent = `Types: ${type}`;
-            popup.appendChild(typesInfo);
+        popup.appendChild(chargedAtk);
+        popup.appendChild(listChargedMoves);
 
-            let enduranceInfo = document.createElement("p");
-            enduranceInfo.textContent = `Endurance: ${pokemon._base_stamina} PV`;
-            popup.appendChild(enduranceInfo);
+        var boutonFermeture = document.createElement("button");
+        boutonFermeture.textContent = "Fermer";
+        boutonFermeture.classList.add("bouton");
 
-            let attaqueInfo = document.createElement("p");
-            attaqueInfo.textContent = `Attaque: ${pokemon._base_attack} ATK`;
-            popup.appendChild(attaqueInfo);
+        popup.appendChild(boutonFermeture);
 
-            let defenseInfo = document.createElement("p");
-            defenseInfo.textContent = `Défense: ${pokemon._base_defense} DEF`;
-            popup.appendChild(defenseInfo);
-
-            let boutonFermeture = document.createElement("button");
-            boutonFermeture.classList.add("bouton");
-            boutonFermeture.textContent = "Fermer";
-            boutonFermeture.addEventListener("click", ()=>{
-                let e = document.querySelector(".popup");
-                e.parentNode.removeChild(e);
-            });
-            popup.appendChild(boutonFermeture);
-
-            // Ajoutez la popup à la page
-            document.body.appendChild(popup);
-
-            
-            let ligneTop = event.clientX + window.scrollX + 2;
-            let ligneLeft = event.clientX + window.scrollX + 2;
-            // Positionnez la popup au-dessus de la ligne
-            popup.style.top = `${ligneTop}px`;
-            popup.style.left = `${ligneLeft}px`;
-        });*/
+        row.appendChild(popup);
+        tbody.appendChild(row);
     });
 }
 

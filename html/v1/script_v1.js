@@ -54,17 +54,16 @@ for(let [idP, pokemon] of Pokemon.all_pokemons){
     illustration.setAttribute('data-label', "IMAGE");
     let source = "";
     if (parseInt(idP) < 10){
-        source = "../webp/images/00" + idP + ".webp";
+        source = "../webp/thumbnails/00" + idP + ".webp";
         img.setAttribute('src', source);
     } else if (parseInt(idP) < 100){
-        source = "../webp/images/0" + idP + ".webp";
+        source = "../webp/thumbnails/0" + idP + ".webp";
         img.setAttribute('src', source);
     } else {
-        source = "../webp/images/" + idP + ".webp";
+        source = "../webp/thumbnails/" + idP + ".webp";
         img.setAttribute('src', source);
     }
-    img.setAttribute("height", "50px");
-    img.setAttribute("width", "50px");
+
     illustration.appendChild(img);
     row.appendChild(illustration);
     

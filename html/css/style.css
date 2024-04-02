@@ -149,7 +149,8 @@ tbody > tr:nth-of-type(even) {
   transform: translate(-50%, -50%); /* Centre la popup horizontalement et verticalement */
   background-color: white;
   padding: 20px;
-  border-radius: 5px;
+  border: 3px ridge rgb(190, 245, 169);
+  border-radius: 10px;
   z-index: 1001; /* Assure que la popup est au-dessus de l'overlay */
-  display: none; /* Démarrez avec la popup masquée */
+  /*display: none; /* Démarrez avec la popup masquée */
 }
