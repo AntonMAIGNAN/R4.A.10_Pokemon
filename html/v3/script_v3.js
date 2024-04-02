@@ -102,10 +102,26 @@ function displayPokemons(page) {
         }
 
         // Popup
+        let ovId = "o"+pokemon._pokemon_id;
+        let popId = "p"+pokemon._pokemon_id;
+
+        var overlay = document.createElement("div");
+        overlay.setAttribute("id", ovId);
+        overlay.classList.add("overlay");
+
         var popup = document.createElement("div");
+        popup.setAttribute("id", popId);
         popup.classList.add("popup");
 
-        var fastAtk = document.createElement("h2");
+
+        var containerTitre = document.createElement("div");
+        var titre = document.createElement("h2");
+        titre.textContent = pokemon._pokemon_name + "(n°" + pokemon._pokemon_id +")";
+        containerTitre.appendChild(titre);
+
+        var mesAttaques = document.createElement("div");
+
+        var fastAtk = document.createElement("h3");
         fastAtk.textContent = "Attaques rapides :";
         var listFastAtk = document.createElement("ul");
         for(let fastMove of pokemon._fast_moves){
@@ -114,10 +130,10 @@ function displayPokemons(page) {
             listFastAtk.appendChild(elem);
         }
 
-        popup.appendChild(fastAtk);
-        popup.appendChild(listFastAtk);
+        mesAttaques.appendChild(fastAtk);
+        mesAttaques.appendChild(listFastAtk);
 
-        var chargedAtk = document.createElement("h2");
+        var chargedAtk = document.createElement("h3");
         chargedAtk.textContent = "Attaques chargées :";
         var listChargedMoves = document.createElement("ul");
         for(let chargedMove of pokemon._charged_moves){
@@ -126,18 +142,51 @@ function displayPokemons(page) {
             listChargedMoves.appendChild(elem);
         }
 
-        popup.appendChild(chargedAtk);
-        popup.appendChild(listChargedMoves);
+        mesAttaques.appendChild(chargedAtk);
+        mesAttaques.appendChild(listChargedMoves);
 
         var boutonFermeture = document.createElement("button");
         boutonFermeture.textContent = "Fermer";
         boutonFermeture.classList.add("bouton");
+        boutonFermeture.addEventListener("click", ()=>{
+            closePopup(popId, ovId);
+        })
+        mesAttaques.appendChild(boutonFermeture);
 
-        popup.appendChild(boutonFermeture);
+        popup.appendChild(containerTitre);
+        popup.appendChild(mesAttaques);
+        
+        //row.setAttribute("onclick", `openPopup(${popId}, ${ovId})`);
+        row.addEventListener("click", ()=>{
+            openPopup(popId, ovId);
+        })
 
-        row.appendChild(popup);
+        tbody.appendChild(overlay);
+        tbody.appendChild(popup);
         tbody.appendChild(row);
     });
+}
+
+// Ouvrir la popup
+function openPopup(id, overlay) {
+    var popup = document.getElementById(id);
+    var overlayPopup = document.getElementById(overlay);
+    popup.style.display = 'block';
+    overlayPopup.style.display = 'block';
+    overlayPopup.addEventListener('click', function (event) {
+        if (event.target === overlayPopup) {
+            popup.style.display = 'none';
+            overlayPopup.style.display = 'none';
+        }
+    });
+}
+
+// Fermer la popup
+function closePopup(id, overlay) {
+    var popup = document.getElementById(id);
+    var overlay = document.getElementById(overlay);
+    popup.style.display = 'none';
+    overlay.style.display = 'none';
 }
 
 // Désactiver les boutons quand nécessaires
