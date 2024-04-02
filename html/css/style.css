@@ -1,6 +1,7 @@
 *{
   padding: 0;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 table {
@@ -45,10 +46,44 @@ tbody > tr:nth-of-type(even) {
   margin: 20px;
 }
 
-.listePokemon {
+.listePokemon, .btnGroup {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#page{
+  font-size: 0.85em;
+}
+
+.bouton{
+  background-color: #FFF;
+  border: 2px ridge rgb(190, 245, 169);
+  padding: 3px 5px;
+  margin: 10px 15px;
+  transition-duration: 0.4s;
+}
+
+.bouton:hover{
+  background-color: rgb(190, 245, 169);
+  color: #FFF;
+}
+
+.bulle{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index : 1;
+  background-color: #FFF;
+  padding: 5px;
+  border: 3px solid rgb(190, 245, 169);
+  font-size: 0.85em;
+}
+
+.bulle img{
+  width:250px;
+  height: 250px;
 }
 
 
@@ -93,4 +128,28 @@ tbody > tr:nth-of-type(even) {
   th + td {
       padding-left: 10px;
   }
+}
+
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond sombre semi-transparent */
+  z-index: 1000; /* Assure que l'overlay est au-dessus de tout le reste */
+  display: none; /* Démarrez avec l'overlay masqué */
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centre la popup horizontalement et verticalement */
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1001; /* Assure que la popup est au-dessus de l'overlay */
+  display: none; /* Démarrez avec la popup masquée */
 }
