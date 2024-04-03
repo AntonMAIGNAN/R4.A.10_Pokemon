@@ -25,7 +25,7 @@ function displayPokemons(page) {
         
 
         var gen = document.createElement('td');
-        gen.innerHTML = "GEN " + pokemon._generation;
+        gen.innerHTML = (pokemon._generation > 0 ? "GEN " + pokemon._generation : '???');
         gen.setAttribute('data-label', "GÉNÉRATION");
         row.appendChild(gen);
         
@@ -113,11 +113,35 @@ function displayPokemons(page) {
         popup.setAttribute("id", popId);
         popup.classList.add("popup");
 
+        var headPopup = document.createElement("div");
+        headPopup.classList.add("headPopup");
 
         var containerTitre = document.createElement("div");
+        containerTitre.classList.add("titlePopup");
+
         var titre = document.createElement("h2");
-        titre.textContent = pokemon._pokemon_name + "(n°" + pokemon._pokemon_id +")";
+        titre.textContent = pokemon._pokemon_name + " N°" + pokemon._pokemon_id;
+        
+
+        var sprite = document.createElement("img");
+        let src = "";
+        if (parseInt(pokemon._pokemon_id) < 10){
+            src = "../webp/sprites/00" + pokemon._pokemon_id + "MS.webp";
+            sprite.setAttribute('src', src);
+        } else if (parseInt(pokemon._pokemon_id) < 100){
+            src = "../webp/sprites/0" + pokemon._pokemon_id + "MS.webp";
+            sprite.setAttribute('src', src);
+        } else {
+            src = "../webp/sprites/" + pokemon._pokemon_id + "MS.webp";
+            sprite.setAttribute('src', src);
+        }
+        sprite.setAttribute("width", "35px");
+        sprite.setAttribute("height", "35px");
+        containerTitre.appendChild(sprite);
         containerTitre.appendChild(titre);
+
+        headPopup.appendChild(containerTitre);
+        
 
         var mesAttaques = document.createElement("div");
 
@@ -151,9 +175,9 @@ function displayPokemons(page) {
         boutonFermeture.addEventListener("click", ()=>{
             closePopup(popId, ovId);
         })
-        mesAttaques.appendChild(boutonFermeture);
+        headPopup.appendChild(boutonFermeture);
 
-        popup.appendChild(containerTitre);
+        popup.appendChild(headPopup);
         popup.appendChild(mesAttaques);
         
         //row.setAttribute("onclick", `openPopup(${popId}, ${ovId})`);
@@ -241,14 +265,6 @@ precedent.addEventListener("click", ()=>{
     verifDesactivation(PAGE);
     afficherNombrePage(PAGE);
 })
-
-// Fonction pour fermer la popup active
-function fermerPopupActive() {
-    let popupActive = document.querySelector(".popup");
-    if (popupActive) {
-        popupActive.parentNode.removeChild(popupActive);
-    }
-}
 
 
 

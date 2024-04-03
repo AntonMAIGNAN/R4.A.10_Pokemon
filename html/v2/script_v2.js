@@ -25,7 +25,7 @@ function displayPokemons(page) {
         
 
         var gen = document.createElement('td');
-        gen.innerHTML = "GEN " + pokemon._generation;
+        gen.innerHTML = (pokemon._generation > 0 ? "GEN " + pokemon._generation : '???');
         gen.setAttribute('data-label', "GÉNÉRATION");
         row.appendChild(gen);
         
