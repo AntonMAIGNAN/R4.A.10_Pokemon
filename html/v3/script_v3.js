@@ -113,6 +113,15 @@ function displayPokemons(page) {
         popup.setAttribute("id", popId);
         popup.classList.add("popup");
 
+        // *** Partie 1 : Statistiques et informations.
+        var part1 = document.createElement("div");
+        part1.style.display = "flex";
+        part1.style.justifyContent = 'space-evenly';
+
+        // Partie gauche
+        var divGauche = document.createElement("div");
+        divGauche.classList.add("divGauche");
+
         var headPopup = document.createElement("div");
         headPopup.classList.add("headPopup");
 
@@ -121,7 +130,6 @@ function displayPokemons(page) {
 
         var titre = document.createElement("h2");
         titre.textContent = pokemon._pokemon_name + " N°" + pokemon._pokemon_id;
-        
 
         var sprite = document.createElement("img");
         let src = "";
@@ -137,37 +145,209 @@ function displayPokemons(page) {
         }
         sprite.setAttribute("width", "35px");
         sprite.setAttribute("height", "35px");
+
+        var types = document.createElement("div");
+        types.classList.add("types");
+        for(let type of pokemon.getTypes()){
+            let imgType = document.createElement("img");
+            let src = "../webp/types/" + type + ".png";
+            imgType.setAttribute("src", src);
+            imgType.setAttribute("title", type);
+            imgType.setAttribute("alt", "Type = " + type);
+            imgType.setAttribute("width", "100px");
+            imgType.setAttribute("height", "22px");
+            types.appendChild(imgType);
+        }
+
+        // -- Statistiques
+        var stats = document.createElement("div");
+        stats.classList.add("stats");
+        var divLabel = document.createElement("div");
+        divLabel.classList.add("divLabel");
+        var divStat = document.createElement("div");
+        divStat.classList.add("divStat");
+        var divIcon = document.createElement("div");
+        divIcon.classList.add("divIcon");
+
+        // Endurance
+        var hpLabel = document.createElement("span");
+        hpLabel.textContent = "Endurance";
+
+        var hpStat = document.createElement("span");
+        hpStat.textContent = pokemon._base_stamina;
+
+        var hpIcon = document.createElement("img");
+        hpIcon.setAttribute("src", "../webp/icons/hp.svg");
+        hpIcon.setAttribute("alt", "Icone de vitalité");
+        hpIcon.setAttribute("title", "HP");
+
+        // Attaque
+        var atqLabel = document.createElement("span");
+        atqLabel.textContent = "Attaque";
+
+        var atqStat = document.createElement("span");
+        atqStat.textContent = pokemon._base_attack;
+
+        var atqIcon = document.createElement("img");
+        atqIcon.setAttribute("src", "../webp/icons/atk.svg");
+        atqIcon.setAttribute("alt", "Icone d'attaque");
+        atqIcon.setAttribute("title", "ATK");
+
+        // Defense
+        var defLabel = document.createElement("span");
+        defLabel.textContent = "Défense";
+
+        var defStat = document.createElement("span");
+        defStat.textContent = pokemon._base_defense;
+
+        var defIcon = document.createElement("img");
+        defIcon.setAttribute("src", "../webp/icons/def.svg");
+        defIcon.setAttribute("alt", "Icone de défense");
+        defIcon.setAttribute("title", "DEF");
+
+        // Construction des divs
+        // - LABEL
+        divLabel.appendChild(hpLabel);
+        divLabel.appendChild(atqLabel);
+        divLabel.appendChild(defLabel);
+        // - STAT
+        divStat.appendChild(hpStat);
+        divStat.appendChild(atqStat);
+        divStat.appendChild(defStat);
+        // - ICON
+        divIcon.appendChild(hpIcon);
+        divIcon.appendChild(atqIcon);
+        divIcon.appendChild(defIcon);
+
+        // Construction des STATISTIQUES
+        stats.appendChild(divLabel);
+        stats.appendChild(divStat);
+        stats.appendChild(divIcon);
+
+        // -- Construction de la partie gauche.
+        // Le titre
         containerTitre.appendChild(sprite);
         containerTitre.appendChild(titre);
-
         headPopup.appendChild(containerTitre);
-        
+        // Les types
+        headPopup.appendChild(types);
+        divGauche.appendChild(headPopup);
+        // Les stats
+        divGauche.appendChild(stats);
 
+        // Partie droite
+        var divDroite = document.createElement("div");
+
+        var imgPkm = document.createElement("img");
+        let srcPkm = "";
+        if (parseInt(pokemon._pokemon_id) < 10){
+            srcPkm = "../webp/images/00" + pokemon._pokemon_id + ".webp";
+            imgPkm.setAttribute('src', srcPkm);
+        } else if (parseInt(pokemon._pokemon_id) < 100){
+            srcPkm = "../webp/images/0" + pokemon._pokemon_id + ".webp";
+            imgPkm.setAttribute('src', srcPkm);
+        } else {
+            srcPkm = "../webp/images/" + pokemon._pokemon_id + ".webp";
+            imgPkm.setAttribute('src', srcPkm);
+        }
+        imgPkm.setAttribute("alt", "Image de " + pokemon._pokemon_name);
+        imgPkm.setAttribute("width", "250px");
+        imgPkm.setAttribute("height", "250px");
+
+        // -- Construction de la partie droite
+        divDroite.appendChild(imgPkm);
+
+        // *-----* Construction de la PARTIE 1
+        part1.appendChild(divGauche);
+        part1.appendChild(divDroite);
+
+        // *** Partie 2 : les attaques.
+        var part2 = document.createElement("div");
         var mesAttaques = document.createElement("div");
+        var mesOnglets = document.createElement("div");
+        var mesContenus = document.createElement("div");
 
-        var fastAtk = document.createElement("h3");
-        fastAtk.textContent = "Attaques rapides :";
-        var listFastAtk = document.createElement("ul");
         for(let fastMove of pokemon._fast_moves){
-            let elem = document.createElement("li");
-            elem.textContent = fastMove._name;
-            listFastAtk.appendChild(elem);
+            let onglet = document.createElement("button");
+            onglet.classList.add("onglet");
+            onglet.textContent = fastMove._name;
+            onglet.setAttribute("data-anim", fastMove._move_id);
+            onglet.addEventListener("click", ()=>{
+
+                if (onglet.classList.contains('active')){
+                    return
+                } else{
+                    onglet.classList.add('active');
+                }
+
+                let index = onglet.getAttribute('data-anim');
+                var lesOnglets = Array.from(document.getElementsByClassName("onglet"));
+                for(let i=0; i < lesOnglets.length; i++){
+                    
+                    if(lesOnglets[i].getAttribute("data-anim")!=index){
+                        lesOnglets[i].classList.remove("active");
+                    }
+                }
+
+                var lesContenus = Array.from(document.getElementsByClassName("contenu"));
+                for(let j=0; j < lesContenus.length; j++){
+
+                    if(lesContenus[j].getAttribute('data-anim')==index){
+                        lesContenus[j].classList.add('activeContenu');
+                    } else {
+                        lesContenus[j].classList.remove('activeContenu');
+                    }
+                }
+            })
+
+            let contenu = document.createElement("div");
+            let contenuGauche = document.createElement("div");
+            let contenuDroit = document.createElement("div");
+            // Container des attributs de l'attaque
+            contenu.setAttribute("data-anim", fastMove._move_id);
+            contenu.classList.add("contenu");
+            // -- GAUCHE
+
+            // - Durée
+            let duree = document.createElement("p");
+            duree.textContent = "Durée  :  " + fastMove._duration + "ms";
+            contenuGauche.appendChild(duree);
+
+            // - Coût en énergie
+            let drain = document.createElement("p");
+            drain.textContent = "Drain d'énergie  :  " + fastMove._energy_delta;
+            contenuGauche.appendChild(drain);
+
+            // - Type
+            let type = document.createElement("p");
+            type.textContent = "Type  :  " + fastMove._type._type;
+            contenuGauche.appendChild(type);
+
+            contenu.appendChild(contenuGauche);
+
+            //-- DROITE
+
+            // - Damage
+            let damage = document.createElement("p");
+            damage.textContent = "Dégat  :  " + fastMove._power;
+            contenuDroit.appendChild(damage);
+            
+            // - Coefficient de perte de vie
+            let coeffVie = document.createElement("p");
+            coeffVie.textContent = "Coefficient de dégat  :  " + fastMove._stamina_loss_scaler;
+            contenuDroit.appendChild(coeffVie);
+
+            // - Chance critique
+            if ('_critical_chance' in fastMove){
+                let criticalChance = document.createElement("p");
+                criticalChance.textContent = "Chance de coup critique  :  " + fastMove._critical_chance;
+                contenuDroit.appendChild(criticalChance);
+            }
+            contenu.appendChild(contenuDroit);
+
+            mesOnglets.appendChild(onglet);
+            mesContenus.appendChild(contenu);
         }
-
-        mesAttaques.appendChild(fastAtk);
-        mesAttaques.appendChild(listFastAtk);
-
-        var chargedAtk = document.createElement("h3");
-        chargedAtk.textContent = "Attaques chargées :";
-        var listChargedMoves = document.createElement("ul");
-        for(let chargedMove of pokemon._charged_moves){
-            let elem = document.createElement("li");
-            elem.textContent = chargedMove._name;
-            listChargedMoves.appendChild(elem);
-        }
-
-        mesAttaques.appendChild(chargedAtk);
-        mesAttaques.appendChild(listChargedMoves);
 
         var boutonFermeture = document.createElement("button");
         boutonFermeture.textContent = "Fermer";
@@ -175,12 +355,14 @@ function displayPokemons(page) {
         boutonFermeture.addEventListener("click", ()=>{
             closePopup(popId, ovId);
         })
-        headPopup.appendChild(boutonFermeture);
 
-        popup.appendChild(headPopup);
-        popup.appendChild(mesAttaques);
+        part2.appendChild(mesOnglets);
+        part2.appendChild(mesContenus);
         
-        //row.setAttribute("onclick", `openPopup(${popId}, ${ovId})`);
+        // Constituion de la popup.
+        popup.appendChild(part1);
+        popup.appendChild(part2);
+
         row.addEventListener("click", ()=>{
             openPopup(popId, ovId);
         })
@@ -266,7 +448,9 @@ precedent.addEventListener("click", ()=>{
     afficherNombrePage(PAGE);
 })
 
-
+function creerAttribut(container, attaque){
+    
+}
 
 
 

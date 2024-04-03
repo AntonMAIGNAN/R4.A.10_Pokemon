@@ -82,7 +82,7 @@ tbody > tr:nth-of-type(even) {
 }
 
 .bulle img{
-  width:200px;
+  width:  200px;
   height: 200px;
 }
 
@@ -108,10 +108,18 @@ tbody > tr:nth-of-type(even) {
   border-radius: 5px;
   z-index: 1001; /* Assure que la popup est au-dessus de l'overlay */
   display: none; /* Démarrez avec la popup masquée */
+  height: 350px;
+}
+
+.divGauche{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .headPopup{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
 }
@@ -122,9 +130,67 @@ tbody > tr:nth-of-type(even) {
 }
 
 .titlePopup h2{
-  text-decoration: underline;
+  width: 200px;
+  text-align: center;
 }
 
+.types{
+  display: flex;
+}
+
+.types img{
+  margin: 2px;
+}
+
+.stats{
+  display: flex;
+  justify-content: center;
+}
+
+.divIcon, .divStat, .divLabel{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100px;
+  font-size: 1.1em;
+}
+
+.divIcon img{
+  width: 15px;
+  height: 15px;
+}
+
+.divLabel{
+  margin-right: 20px;
+}
+
+.divLabel span{
+  font-weight: bolder;
+}
+
+.contenu{
+  position: absolute;
+  display: flex;
+  opacity: 0;
+}
+
+.active{
+  background-color: rgb(190, 245, 169);
+  color: #FFF;
+  transition: all 0.3s ease;
+}
+
+.activeContenu{
+  animation: fade 0.5s forwards;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
 
 @media only screen and (max-width: 700px){
   table, thead, tbody, tr, th, td {
