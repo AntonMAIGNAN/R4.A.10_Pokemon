@@ -293,10 +293,11 @@ function displayPokemons(page) {
         part2.appendChild(mesOnglets);
         part2.appendChild(mesContenus);
 
-
         // Constituion de la popup.
         popup.appendChild(part1);
         popup.appendChild(part2);
+
+        
 
         row.addEventListener("click", ()=>{
             openPopup(popId, ovId);
@@ -305,8 +306,13 @@ function displayPokemons(page) {
         tbody.appendChild(overlay);
         tbody.appendChild(popup);
         tbody.appendChild(row);
+
+        popup.style.paddingBottom = "150px";
     });
 }
+
+// Déclarer un objet pour stocker l'état de chaque popup
+let popupStates = {};
 
 // Ouvrir la popup
 function openPopup(id, overlay) {
@@ -321,6 +327,7 @@ function openPopup(id, overlay) {
         }
     });
 }
+
 
 // Fermer la popup
 function closePopup(id, overlay) {
@@ -481,7 +488,4 @@ function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove)
         containerContenu.appendChild(contenu);
     }
 }
-
-
-
 

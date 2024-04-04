@@ -108,7 +108,7 @@ tbody > tr:nth-of-type(even) {
   border-radius: 5px;
   z-index: 1001; /* Assure que la popup est au-dessus de l'overlay */
   display: none; /* Démarrez avec la popup masquée */
-  height: 420px;
+  width: 500px;
 }
 
 .divGauche{
@@ -178,6 +178,9 @@ tbody > tr:nth-of-type(even) {
 
 .mesOnglets{
   display: flex;
+  flex-wrap: wrap;
+  min-height: 30px;
+  height: auto;
 }
 
 
@@ -232,6 +235,7 @@ tbody > tr:nth-of-type(even) {
   color: black;
   border: none;
   padding: 10px 10px 5px 10px; 
+  height: 30px;
 }
 .onglet:hover{
   background-color: rgb(236, 250, 211);
