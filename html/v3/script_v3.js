@@ -113,6 +113,21 @@ function displayPokemons(page) {
         popup.setAttribute("id", popId);
         popup.classList.add("popup");
 
+        var close = document.createElement("div");
+        
+        var fermeture = document.createElement("img");
+        fermeture.setAttribute('src', '../webp/icons/fermer.png');
+        fermeture.setAttribute('width', '20px');
+        fermeture.setAttribute('alt', 'icon fermeture');
+        fermeture.setAttribute('title', 'fermer');
+        close.appendChild(fermeture);
+        close.classList.add("fermeture");
+        close.addEventListener("click", ()=>{
+            closePopup(popId, ovId);
+        })
+        popup.appendChild(close);
+        
+
         // *** Partie 1 : Statistiques et informations.
         var part1 = document.createElement("div");
         part1.style.display = "flex";
@@ -263,102 +278,22 @@ function displayPokemons(page) {
 
         // *** Partie 2 : les attaques.
         var part2 = document.createElement("div");
-        var mesAttaques = document.createElement("div");
+        part2.classList.add("part2");
         var mesOnglets = document.createElement("div");
+        mesOnglets.classList.add("mesOnglets");
         var mesContenus = document.createElement("div");
 
-        for(let fastMove of pokemon._fast_moves){
-            let onglet = document.createElement("button");
-            onglet.classList.add("onglet");
-            onglet.textContent = fastMove._name;
-            onglet.setAttribute("data-anim", fastMove._move_id);
-            onglet.addEventListener("click", ()=>{
+        creerAttribut(pokemon._fast_moves, mesOnglets, mesContenus, 'FAST');
+        creerAttribut(pokemon._charged_moves, mesOnglets, mesContenus, 'CHARGED');
 
-                if (onglet.classList.contains('active')){
-                    return
-                } else{
-                    onglet.classList.add('active');
-                }
-
-                let index = onglet.getAttribute('data-anim');
-                var lesOnglets = Array.from(document.getElementsByClassName("onglet"));
-                for(let i=0; i < lesOnglets.length; i++){
-                    
-                    if(lesOnglets[i].getAttribute("data-anim")!=index){
-                        lesOnglets[i].classList.remove("active");
-                    }
-                }
-
-                var lesContenus = Array.from(document.getElementsByClassName("contenu"));
-                for(let j=0; j < lesContenus.length; j++){
-
-                    if(lesContenus[j].getAttribute('data-anim')==index){
-                        lesContenus[j].classList.add('activeContenu');
-                    } else {
-                        lesContenus[j].classList.remove('activeContenu');
-                    }
-                }
-            })
-
-            let contenu = document.createElement("div");
-            let contenuGauche = document.createElement("div");
-            let contenuDroit = document.createElement("div");
-            // Container des attributs de l'attaque
-            contenu.setAttribute("data-anim", fastMove._move_id);
-            contenu.classList.add("contenu");
-            // -- GAUCHE
-
-            // - Durée
-            let duree = document.createElement("p");
-            duree.textContent = "Durée  :  " + fastMove._duration + "ms";
-            contenuGauche.appendChild(duree);
-
-            // - Coût en énergie
-            let drain = document.createElement("p");
-            drain.textContent = "Drain d'énergie  :  " + fastMove._energy_delta;
-            contenuGauche.appendChild(drain);
-
-            // - Type
-            let type = document.createElement("p");
-            type.textContent = "Type  :  " + fastMove._type._type;
-            contenuGauche.appendChild(type);
-
-            contenu.appendChild(contenuGauche);
-
-            //-- DROITE
-
-            // - Damage
-            let damage = document.createElement("p");
-            damage.textContent = "Dégat  :  " + fastMove._power;
-            contenuDroit.appendChild(damage);
-            
-            // - Coefficient de perte de vie
-            let coeffVie = document.createElement("p");
-            coeffVie.textContent = "Coefficient de dégat  :  " + fastMove._stamina_loss_scaler;
-            contenuDroit.appendChild(coeffVie);
-
-            // - Chance critique
-            if ('_critical_chance' in fastMove){
-                let criticalChance = document.createElement("p");
-                criticalChance.textContent = "Chance de coup critique  :  " + fastMove._critical_chance;
-                contenuDroit.appendChild(criticalChance);
-            }
-            contenu.appendChild(contenuDroit);
-
-            mesOnglets.appendChild(onglet);
-            mesContenus.appendChild(contenu);
-        }
-
-        var boutonFermeture = document.createElement("button");
-        boutonFermeture.textContent = "Fermer";
-        boutonFermeture.classList.add("bouton");
-        boutonFermeture.addEventListener("click", ()=>{
-            closePopup(popId, ovId);
-        })
+        // Rendre active la premiere attaque
+        mesOnglets.firstChild.classList.add('active');
+        mesContenus.firstChild.classList.add('activeContenu');
 
         part2.appendChild(mesOnglets);
         part2.appendChild(mesContenus);
-        
+
+
         // Constituion de la popup.
         popup.appendChild(part1);
         popup.appendChild(part2);
@@ -448,8 +383,103 @@ precedent.addEventListener("click", ()=>{
     afficherNombrePage(PAGE);
 })
 
-function creerAttribut(container, attaque){
-    
+function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove){
+    for(let attaque of tabAttacks){
+        let onglet = document.createElement("button");
+        onglet.classList.add("onglet");
+        onglet.textContent = attaque._name;
+        onglet.setAttribute("data-anim", attaque._move_id);
+
+        onglet.addEventListener("click", ()=>{
+
+            if (onglet.classList.contains('active')){
+                return
+            } else{
+                onglet.classList.add('active');
+            }
+
+            let index = onglet.getAttribute('data-anim');
+            var lesOnglets = Array.from(document.getElementsByClassName("onglet"));
+            for(let i=0; i < lesOnglets.length; i++){
+                
+                if(lesOnglets[i].getAttribute("data-anim")!=index){
+                    lesOnglets[i].classList.remove("active");
+                }
+            }
+
+            var lesContenus = Array.from(document.getElementsByClassName("contenu"));
+            for(let j=0; j < lesContenus.length; j++){
+
+                if(lesContenus[j].getAttribute('data-anim')==index){
+                    lesContenus[j].classList.add('activeContenu');
+                } else {
+                    lesContenus[j].classList.remove('activeContenu');
+                }
+            }
+        })
+
+        let contenu = document.createElement("div");
+        let contenuGauche = document.createElement("div");
+        let contenuDroit = document.createElement("div");
+
+        // Container des attributs de l'attaque
+        contenu.setAttribute("data-anim", attaque._move_id);
+        contenu.classList.add("contenu");
+
+        // Type de mouvement.
+        var move = document.createElement("p");
+        move.classList.add("move");
+        move.textContent = typeMove;
+        contenu.appendChild(move);
+
+        // -- GAUCHE
+
+        // - Durée
+        let duree = document.createElement("div");
+        duree.classList.add("row-attribute");
+        duree.innerHTML = "<p class='label'>Durée  :  </p><p class='value'>" + attaque._duration + " ms</p>";
+        contenuGauche.appendChild(duree);
+
+        // - Coût en énergie
+        let drain = document.createElement("div");
+        drain.classList.add("row-attribute");
+        drain.innerHTML = "<p class='label'> Drain d'énergie  : </p><p class='value'>" + attaque._energy_delta + "</p>";
+        contenuGauche.appendChild(drain);
+
+        // - Type
+        let type = document.createElement("div");
+        type.classList.add("row-attribute");
+        type.innerHTML = "<p class='label'>Type  : </p><p class='value'> " + attaque._type._type + "</p>";
+        contenuGauche.appendChild(type);
+
+        contenu.appendChild(contenuGauche);
+
+        //-- DROITE
+
+        // - Damage
+        let damage = document.createElement("div");
+        damage.classList.add("row-attribute");
+        damage.innerHTML = "<p class='label'>Dégat  :  </p><p class='value'>" + attaque._power + "</p>";
+        contenuDroit.appendChild(damage);
+        
+        // - Coefficient de perte de vie
+        let coeffVie = document.createElement("div");
+        coeffVie.classList.add("row-attribute");
+        coeffVie.innerHTML = "<p class='label'>Coefficient de dégat  : </p><p class='value'>" + attaque._stamina_loss_scaler + "</p>";
+        contenuDroit.appendChild(coeffVie);
+
+        // - Chance critique
+        if ('_critical_chance' in attaque){
+            let criticalChance = document.createElement("div");
+            criticalChance.classList.add("row-attribute");
+            criticalChance.innerHTML = "<p class='label'>Chance de coup critique  : </p><p class='value'>" + attaque._critical_chance + "</p>";
+            contenuDroit.appendChild(criticalChance);
+        }
+        contenu.appendChild(contenuDroit);
+
+        containerOnglets.appendChild(onglet);
+        containerContenu.appendChild(contenu);
+    }
 }
 
 
