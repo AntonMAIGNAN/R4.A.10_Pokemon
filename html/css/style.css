@@ -127,6 +127,8 @@ tbody > tr:nth-of-type(even) {
 .titlePopup{
   display: flex;
   align-items: center;
+  background-color: rgb(190, 245, 169);
+  margin-bottom: 10px
 }
 
 .titlePopup h2{
