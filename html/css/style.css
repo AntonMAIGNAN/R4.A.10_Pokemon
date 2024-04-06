@@ -124,6 +124,12 @@ tbody > tr:nth-of-type(even) {
   justify-content: space-between;
 }
 
+.headPopup .titlePopup{
+  background-color: rgb(190, 245, 169);
+  padding: 2px;
+  margin-bottom: 5px;
+}
+
 .titlePopup{
   display: flex;
   align-items: center;
