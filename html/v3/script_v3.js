@@ -544,7 +544,7 @@ function definirCouleur(type) {
             couleur = '#6c6c6c';
             break;
         case 'Dragon':
-            couleur = '#9a87d8';
+            couleur = '#435DBF';
             break;
         case 'Electric':
             couleur = '#ffe699';
