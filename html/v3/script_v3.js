@@ -102,6 +102,7 @@ function displayPokemons(page) {
         }
 
         // Popup
+        var couleur = definirCouleur(pokemon.getTypes()[0]._type);
         let ovId = "o"+pokemon._pokemon_id;
         let popId = "p"+pokemon._pokemon_id;
 
@@ -120,6 +121,12 @@ function displayPokemons(page) {
         fermeture.setAttribute('width', '20px');
         fermeture.setAttribute('alt', 'icon fermeture');
         fermeture.setAttribute('title', 'fermer');
+        fermeture.addEventListener("mouseenter", ()=>{
+            close.style.backgroundColor = `${couleur}`;
+        })
+        fermeture.addEventListener("mouseout", ()=>{
+            close.style.backgroundColor = "transparent";
+        })
         close.appendChild(fermeture);
         close.classList.add("fermeture");
         close.addEventListener("click", ()=>{
@@ -141,6 +148,8 @@ function displayPokemons(page) {
         headPopup.classList.add("headPopup");
 
         var containerTitre = document.createElement("div");
+        
+        containerTitre.style.backgroundColor = `${couleur}`;
         containerTitre.classList.add("titlePopup");
 
         var titre = document.createElement("h2");
@@ -282,12 +291,14 @@ function displayPokemons(page) {
         var mesOnglets = document.createElement("div");
         mesOnglets.classList.add("mesOnglets");
         var mesContenus = document.createElement("div");
+        mesContenus.classList.add("mesContenus");
 
-        creerAttribut(pokemon._fast_moves, mesOnglets, mesContenus, 'FAST');
-        creerAttribut(pokemon._charged_moves, mesOnglets, mesContenus, 'CHARGED');
+        creerAttribut(pokemon._fast_moves, mesOnglets, mesContenus, 'FAST', couleur,  pokemon.getTypes()[0]._type);
+        creerAttribut(pokemon._charged_moves, mesOnglets, mesContenus, 'CHARGED', couleur,  pokemon.getTypes()[0]._type);
 
         // Rendre active la premiere attaque
         mesOnglets.firstChild.classList.add('active');
+        mesOnglets.firstChild.classList.add('popup-color-' + pokemon.getTypes()[0]._type);
         mesContenus.firstChild.classList.add('activeContenu');
 
         part2.appendChild(mesOnglets);
@@ -297,10 +308,8 @@ function displayPokemons(page) {
         popup.appendChild(part1);
         popup.appendChild(part2);
 
-        
-
         row.addEventListener("click", ()=>{
-            openPopup(popId, ovId);
+            openPopup(popId, ovId, pokemon.getTypes()[0]._type);
         })
 
         tbody.appendChild(overlay);
@@ -308,26 +317,39 @@ function displayPokemons(page) {
         tbody.appendChild(row);
 
         popup.style.paddingBottom = "150px";
+        popup.style.borderColor = couleur;
+
     });
 }
 
-// Déclarer un objet pour stocker l'état de chaque popup
-let popupStates = {};
-
 // Ouvrir la popup
-function openPopup(id, overlay) {
+function openPopup(id, overlay, couleur) {
     var popup = document.getElementById(id);
     var overlayPopup = document.getElementById(overlay);
     popup.style.display = 'block';
     overlayPopup.style.display = 'block';
+
+    // Ajouter une classe spéciale à l'onglet actif pour la couleur
+    var activeElement = document.querySelector('.active');
+    activeElement.classList.add('popup-color-' + couleur);
+
     overlayPopup.addEventListener('click', function (event) {
         if (event.target === overlayPopup) {
             popup.style.display = 'none';
             overlayPopup.style.display = 'none';
+
+            // Supprimer la classe spéciale de l'onglet actif lors de la fermeture de la popup
+            activeElement.classList.remove('popup-color-' + couleur);
         }
     });
-}
 
+    // Rendre active la premiere attaque
+    var contenus =  Array.from(popup.getElementsByClassName("mesContenus"))[0];
+    var onglets =  Array.from(popup.getElementsByClassName("mesOnglets"))[0];
+    onglets.firstChild.classList.add('active');
+    onglets.firstChild.classList.add('popup-color-' + couleur);
+    contenus.firstChild.classList.add('activeContenu');
+}
 
 // Fermer la popup
 function closePopup(id, overlay) {
@@ -390,19 +412,36 @@ precedent.addEventListener("click", ()=>{
     afficherNombrePage(PAGE);
 })
 
-function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove){
+function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove, codeCouleur, couleur){
     for(let attaque of tabAttacks){
         let onglet = document.createElement("button");
         onglet.classList.add("onglet");
         onglet.textContent = attaque._name;
         onglet.setAttribute("data-anim", attaque._move_id);
+        onglet.classList.add("inactif");
+
+        onglet.addEventListener("mouseenter", ()=>{
+            onglet.style.backgroundColor = `rgba(${hexToRgb(codeCouleur)}, 0.5)`;
+        })
+        onglet.addEventListener("mouseout", ()=>{
+            onglet.style.removeProperty("background-color");
+            if (onglet.classList.contains('active')){
+                onglet.classList.remove("active");
+                onglet.classList.add("active");
+            } else{
+                onglet.classList.remove("inactif");
+                onglet.classList.add('inactif');
+            }
+        })
 
         onglet.addEventListener("click", ()=>{
 
             if (onglet.classList.contains('active')){
                 return
             } else{
+                onglet.classList.remove('inactif');
                 onglet.classList.add('active');
+                onglet.classList.add('popup-color-' + couleur);
             }
 
             let index = onglet.getAttribute('data-anim');
@@ -410,7 +449,9 @@ function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove)
             for(let i=0; i < lesOnglets.length; i++){
                 
                 if(lesOnglets[i].getAttribute("data-anim")!=index){
+                    onglet.classList.add('inactif');
                     lesOnglets[i].classList.remove("active");
+                    lesOnglets[i].classList.remove('popup-color-' + couleur);
                 }
             }
 
@@ -423,6 +464,7 @@ function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove)
                     lesContenus[j].classList.remove('activeContenu');
                 }
             }
+            
         })
 
         let contenu = document.createElement("div");
@@ -435,6 +477,7 @@ function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove)
 
         // Type de mouvement.
         var move = document.createElement("p");
+        move.style.borderColor = `${codeCouleur}`;
         move.classList.add("move");
         move.textContent = typeMove;
         contenu.appendChild(move);
@@ -484,8 +527,89 @@ function creerAttribut(tabAttacks, containerOnglets, containerContenu, typeMove)
         }
         contenu.appendChild(contenuDroit);
 
+        contenu.style.borderColor = `${codeCouleur}`;
         containerOnglets.appendChild(onglet);
         containerContenu.appendChild(contenu);
     }
 }
+
+
+function definirCouleur(type) {
+    let couleur = '';
+    switch (type) {
+        case 'Bug':
+            couleur = '#c2d4aa';
+            break;
+        case 'Dark':
+            couleur = '#6c6c6c';
+            break;
+        case 'Dragon':
+            couleur = '#9a87d8';
+            break;
+        case 'Electric':
+            couleur = '#ffe699';
+            break;
+        case 'Fire':
+            couleur = '#ffaf7a';
+            break;
+        case 'Fairy':
+            couleur = '#fcb9b9'; 
+            break;
+        case 'Fighting':
+            couleur = '#d07851';
+            break;
+        case 'Flying':
+            couleur = '#add8e6'; 
+            break;
+        case 'Ghost':
+            couleur = '#c9c9eb'; 
+            break;
+        case 'Grass':
+            couleur = '#a4cf9e';
+            break;
+        case 'Ground':
+            couleur = '#e6bb8e'; 
+            break;
+        case 'Ice':
+            couleur = '#afeeee';
+            break;
+        case 'Normal':
+            couleur = '#c3c3c3';
+            break;
+        case 'Poison':
+            couleur = '#d5a8d4';
+            break;
+        case 'Psychic':
+            couleur = '#f5a2a2';
+            break;
+        case 'Rock':
+            couleur = '#c3b091';
+            break;
+        case 'Steel':
+            couleur = '#b0c4de';
+            break;
+        case 'Water':
+            couleur = '#a2cffe';
+            break;
+        default:
+            couleur = '#ffffff'; // Couleur par défaut
+    }
+    return couleur;
+}
+
+// Fonction pour convertir une couleur hexadécimale en RGB
+function hexToRgb(hex) {
+    // Supprimer le "#" du début de la chaîne hexadécimale si présent
+    hex = hex.replace(/^#/, '');
+
+    // Séparer les composantes RGB
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+
+    // Retourner les composantes RGB sous forme de chaîne
+    return `${r}, ${g}, ${b}`;
+}
+
+
 
