@@ -71,35 +71,34 @@ function displayPokemons(page) {
             img.setAttribute('src', source);
         }
         img.setAttribute("class", "pokeImage");
+
+        img.addEventListener("mouseover", function(event) {
+            // Définir les coordonnées de la bulle
+            var x = event.clientX + window.scrollX + 2; 
+            var y = event.clientY + window.scrollY + 5; 
+
+            // Afficher la bulle
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "flex";
+            tooltip.style.position = "absolute";
+            tooltip.style.top = y + "px";
+            tooltip.style.left = x + "px";
+
+            // Afficher l'image dans la bulle.
+            var imageBulle = document.getElementById("tooltipImage");
+            imageBulle.setAttribute("src", img.src.replace("thumbnails", "images"));
+        });
+
+        img.addEventListener("mouseout", ()=>{
+            // Masquer la bulle d'information lorsque la souris quitte l'image
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = "none";
+        });
+
         illustration.appendChild(img);
         row.appendChild(illustration);  
 
-        // Tooltip servant à afficher les images.
-        const mesPokeImages = Array.from(document.getElementsByClassName("pokeImage"));
-        for (let pokeImage of mesPokeImages) {
-            pokeImage.addEventListener("mouseover", function(event) {
-                // Définir les coordonnées de la bulle
-                var x = event.clientX + window.scrollX + 2; 
-                var y = event.clientY + window.scrollY + 5; 
-
-                // Afficher la bulle
-                var tooltip = document.getElementById("tooltip");
-                tooltip.style.display = "flex";
-                tooltip.style.position = "absolute";
-                tooltip.style.top = y + "px";
-                tooltip.style.left = x + "px";
-
-                // Afficher l'image dans la bulle.
-                var imageBulle = document.getElementById("tooltipImage");
-                imageBulle.setAttribute("src", pokeImage.src.replace("thumbnails", "images"));
-            });
-
-            pokeImage.addEventListener("mouseout", ()=>{
-                // Masquer la bulle d'information lorsque la souris quitte l'image
-                var tooltip = document.getElementById("tooltip");
-                tooltip.style.display = "none";
-            });
-        }
+        
 
         // Popup
         var couleur = definirCouleur(pokemon.getTypes()[0]._type);
@@ -261,6 +260,7 @@ function displayPokemons(page) {
 
         // Partie droite
         var divDroite = document.createElement("div");
+        divDroite.classList.add("partDroite");
 
         var imgPkm = document.createElement("img");
         let srcPkm = "";
@@ -297,10 +297,12 @@ function displayPokemons(page) {
         creerAttribut(pokemon._charged_moves, mesOnglets, mesContenus, 'CHARGED', couleur,  pokemon.getTypes()[0]._type);
 
         // Rendre active la premiere attaque
-        mesOnglets.firstChild.classList.add('active');
-        mesOnglets.firstChild.classList.add('popup-color-' + pokemon.getTypes()[0]._type);
-        mesContenus.firstChild.classList.add('activeContenu');
-
+        if (mesOnglets.length > 0){
+            mesOnglets.firstChild.classList.add('active');
+            mesOnglets.firstChild.classList.add('popup-color-' + pokemon.getTypes()[0]._type);
+            mesContenus.firstChild.classList.add('activeContenu');
+        }
+        
         part2.appendChild(mesOnglets);
         part2.appendChild(mesContenus);
 
@@ -329,23 +331,29 @@ function openPopup(id, overlay, couleur) {
     popup.style.display = 'block';
     overlayPopup.style.display = 'block';
 
-    // Ajouter une classe spéciale à l'onglet actif pour la couleur
-    var activeElement = document.querySelector('.active');
-    activeElement.classList.add('popup-color-' + couleur);
-
     overlayPopup.addEventListener('click', function (event) {
         if (event.target === overlayPopup) {
             popup.style.display = 'none';
             overlayPopup.style.display = 'none';
-
-            // Supprimer la classe spéciale de l'onglet actif lors de la fermeture de la popup
-            activeElement.classList.remove('popup-color-' + couleur);
         }
     });
-
-    // Rendre active la premiere attaque
     var contenus =  Array.from(popup.getElementsByClassName("mesContenus"))[0];
     var onglets =  Array.from(popup.getElementsByClassName("mesOnglets"))[0];
+
+    // Rendre onglet actif to inactif
+    let ongletActifs = Array.from(popup.getElementsByClassName("active"));
+    for(let onglet of ongletActifs){
+        onglet.classList.remove('active');
+        onglet.classList.remove('popup-color-' + couleur);
+        onglet.classList.add('inactif');
+    }
+
+    let contenuActifs = Array.from(popup.getElementsByClassName("activeContenu"));
+    for(let contenu of contenuActifs){
+        contenu.classList.remove('activeContenu');
+    }
+    
+    // Rendre active la premiere attaque
     onglets.firstChild.classList.add('active');
     onglets.firstChild.classList.add('popup-color-' + couleur);
     contenus.firstChild.classList.add('activeContenu');

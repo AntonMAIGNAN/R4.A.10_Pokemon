@@ -318,6 +318,36 @@ tbody > tr:nth-of-type(even) {
   th + td {
       padding-left: 10px;
   }
+
+  .popup{
+    width: 200px;
+    height: 425px;
+    overflow: auto;
+  }
+
+  .popup::-webkit-scrollbar{
+    width: 0;
+  }
+
+  .popup .partDroite img{
+    display: none;
+  }
+
+  .popup .fermeture{
+    position:relative;
+    width: 20px;
+    right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .popup .contenu{
+    flex-direction: column;
+    width: 180px;
+  }
+
+  .popup .row-attribute:first-child{
+    margin-top: 10px;
+  }
 }
 
 
