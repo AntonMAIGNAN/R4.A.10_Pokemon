@@ -24,19 +24,24 @@
         <img src="../test/logo_pokemon.png" alt="Pokemon">
     </div>
 
-
     <form action="" class="containerFiltre">
-        <label for="name" class="label">Nom :</label>
-        <input type="text" id="name"/>
 
         <div class="champ">
-            <label for="type-select" class="label">Type :</label>
-            <select name="type" id="type-select" onfocus='this.size=18;' onblur='this.size=0;' onchange='this.size=1; this.blur();'></select>    
+            <label for="name" class="label">Nom</label>
+            <input type="text" id="name"/>
+        </div>
+            
+        <div class="champ type-champ">
+            <div style="display: flex; align-items: center;">
+                <label for="type-select" class="label">Type</label>
+                <div class="rond"></div>
+            </div>
+            <select name="type" id="type-select" onfocus='this.size=19;' onblur='this.size=0;' onchange='this.size=1; this.blur();'></select>        
         </div>
 
         <div class="champ">
-            <label for="gen-select" class="label">Génération :</label>    
-            <select name="gen" id="gen-select" onfocus='this.size=8;' onblur='this.size=0;' onchange='this.size=1; this.blur();'></select>
+            <label for="gen-select" class="label">Génération</label>    
+            <select name="gen" id="gen-select" onfocus='this.size=9;' onblur='this.size=0;' onchange='this.size=1; this.blur();'></select>
         </div>
     </form>
   

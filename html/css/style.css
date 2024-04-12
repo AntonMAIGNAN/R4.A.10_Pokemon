@@ -297,22 +297,47 @@ tbody > tr:nth-of-type(even) {
 
 #type-select, #gen-select{
   position: absolute;
+  outline: none;
+}
+
+#type-select{
+  left: 33%;
   z-index: 10;
 }
 
+#gen-select{
+  left: 50%;
+  z-index: 9;
+}
+
 .champ{
-  margin-right: 75px;
+  width: 200px;
   margin-left: 25px;
+  display: flex;
+  position: relative;
+}
+
+.type-champ{
+  width: 225px;
 }
 
 input{
   border-style: none none solid none; 
+  outline: none;
+  width: 145px;
 }
 
 .containerFiltre{
   display: flex;
   justify-content: center;
   margin: 2em;
+}
+
+.rond{
+  width: 15px;
+  height: 15px;
+  border-radius: 50%; 
+  background-color: #ccc;
 }
 
 @media only screen and (max-width: 700px){
@@ -385,6 +410,16 @@ input{
 
   .popup .row-attribute:first-child{
     margin-top: 10px;
+  }
+
+  .champ{
+    width: 225px;
+    margin: 5px;
+  }
+
+  .containerFiltre{
+    flex-direction: column;
+    align-items: center;
   }
 }
 

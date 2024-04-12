@@ -369,13 +369,20 @@ function closePopup(id, overlay) {
 
 // Désactiver les boutons quand nécessaires
 function verifDesactivation(page){
-    if (page==1){
+    if ((page==1)&&(page==maxPage)){
         precedent.disabled = true;
         precedent.setAttribute("style", "cursor:not-allowed")
+        suivant.disabled = true;
+        suivant.setAttribute("style", "cursor:not-allowed")
+    }else if (page==1){
+        precedent.disabled = true;
+        precedent.setAttribute("style", "cursor:not-allowed")
+        suivant.disabled = false;
         suivant.setAttribute("style", "cursor:pointer")
     } else if (page==maxPage){
         suivant.disabled = true;
         suivant.setAttribute("style", "cursor:not-allowed")
+        precedent.disabled = false;
         precedent.setAttribute("style", "cursor:pointer")
     } else {
         precedent.disabled = false;
@@ -394,9 +401,9 @@ function afficherNombrePage(page){
 // Initialisation de la PAGE n°1
 const suivant = document.getElementById("suivant");
 const precedent = document.getElementById("precedent");
-const allPokemons = new Map(Pokemon.all_pokemons);
+var allPokemons = new Map(Pokemon.all_pokemons);
 const pokemonPerPage = 25;
-const maxPage = Math.ceil(allPokemons.size / pokemonPerPage);
+var maxPage = Math.ceil(allPokemons.size / pokemonPerPage);
 var PAGE = 1;
 displayPokemons(PAGE);
 verifDesactivation(PAGE);
@@ -415,6 +422,7 @@ suivant.addEventListener("click", ()=>{
 precedent.disabled = true;
 precedent.addEventListener("click", ()=>{
     PAGE--;
+    console.log(PAGE);
     displayPokemons(PAGE);
     verifDesactivation(PAGE);
     afficherNombrePage(PAGE);
@@ -619,15 +627,23 @@ function hexToRgb(hex) {
     return `${r}, ${g}, ${b}`;
 }
 
-// Compléte dynamiquement le select des TYPES dans les filtres 
+var filteredMap= new Map(allPokemons)
 
-var typeSelect = document.getElementById("type-select");
+// Compléte dynamiquement le select des TYPES dans les filtres 
+const typeSelect = document.getElementById("type-select");
+var rond = Array.from(document.getElementsByClassName("rond"))[0];
 var allTypes = Type.all_types;
+
+var option = document.createElement("option");
+option.classList.add("option");
+option.setAttribute("value", "noType");
+option.textContent = " -- Type -- ";
+typeSelect.appendChild(option);
 
 for(let [type, object] of allTypes){
     let option = document.createElement("option");
     option.classList.add("option");
-    option.setAttribute("value", type.toLowerCase());
+    option.setAttribute("value", type);
     let color = definirCouleur(type);
     option.textContent = type;
     option.addEventListener("mouseenter", ()=>{
@@ -636,14 +652,82 @@ for(let [type, object] of allTypes){
     option.addEventListener("mouseout", ()=>{
         option.style.backgroundColor = 'transparent';
     })
+    option.addEventListener("click", ()=>{
+        rond.style.backgroundColor = color;
+    })
     typeSelect.appendChild(option);
 }
 
-var genSelect = document.getElementById("gen-select");
+
+// Compléte dynamiquement le select des GEN dans les filtres 
+const genSelect = document.getElementById("gen-select");
+
+var option = document.createElement("option");
+option.classList.add("option");
+option.setAttribute("value", "noGen");
+option.textContent = " -- Génération -- ";
+genSelect.appendChild(option);
+
 for(let generation of Pokemon.all_generations){
     let option = document.createElement("option");
     option.classList.add("option");
     option.setAttribute("value", generation);
     option.textContent = "GEN " + generation;
+    
     genSelect.appendChild(option);
 }
+
+
+const nom = document.getElementById("name")
+
+// Fonction pour filtrer les Pokémon en fonction des sélections dans les menus déroulants et du texte entré dans le champ nom
+function filtrageCombine() {
+    let pokemonsFiltres = new Map(Pokemon.all_pokemons);
+
+    let selectedType = typeSelect.value;
+    let selectedGen = genSelect.value;
+
+    // Filtrer en fonction du type sélectionné dans le menu déroulant
+    if (selectedType !== 'noType') {
+        pokemonsFiltres = new Map(Array.from(pokemonsFiltres.entries()).filter(([_, pokemon]) => {
+            let typesMap = pokemon.getTypes();
+            return Array.from(typesMap.values()).some(type => type._type === selectedType);
+        }));
+    }
+
+    // Filtrer en fonction de la génération sélectionnée dans le menu déroulant
+    if (selectedGen !== 'noGen') {
+        pokemonsFiltres = new Map([...pokemonsFiltres.entries()].filter(([_, pokemon]) => pokemon._generation == selectedGen));
+    }
+
+    // Filtrer en fonction du nom saisi dans le champ nom
+    if (nom.value !== '') {
+        pokemonsFiltres = new Map([...pokemonsFiltres.entries()].filter(([_, pokemon]) => pokemon._pokemon_name.includes(nom.value)));
+    }
+
+    // Mettre à jour maxPage et PAGE
+    maxPage = Math.ceil(pokemonsFiltres.size / pokemonPerPage);
+    PAGE = 1;
+
+    allPokemons = new Map(pokemonsFiltres);
+
+    // Afficher les Pokémon filtrés
+    displayPokemons(1);
+    verifDesactivation(1);
+    afficherNombrePage(1);
+}
+
+// Écouter les changements dans le menu déroulant type-select
+typeSelect.addEventListener("change", () => {
+    filtrageCombine();
+});
+
+// Écouter les changements dans le menu déroulant gen-select
+genSelect.addEventListener("change", () => {
+    filtrageCombine();
+});
+
+// Écouter les changements dans le champ nom
+nom.addEventListener("input", () => {
+    filtrageCombine();
+});
