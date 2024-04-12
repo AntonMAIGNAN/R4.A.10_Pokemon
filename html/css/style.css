@@ -249,6 +249,7 @@ tbody > tr:nth-of-type(even) {
 .row-attribute {
   display: flex;
   padding: 1em;
+  align-items:center;
 }
 .label{
   font-weight: bold;
@@ -274,6 +275,9 @@ tbody > tr:nth-of-type(even) {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+}
+
+.option{
 }
 
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Incroyable</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- les datas des JSONS -->
+    <script src="../data/pokemons.js"></script>
+    <script src="../data/charged_moves.js"></script>
+    <script src="../data/cp_multiplier.js"></script>
+    <script src="../data/fast_moves.js"></script>
+    <script src="../data/generation.js"></script>
+    <script src="../data/pokemon_moves.js"></script>
+    <script src="../data/pokemon_type.js"></script> 
+    <script src="../data/type_effectiveness.js"></script>
+    <!-- Nos classes -->
+    <script src="../data/class_attack.js"></script>
+    <script src="../data/class_type.js"></script>
+    <script src="../data/class_pokemon.js"></script>
+</head>
+<body>
+    <div class="image-conteneur">
+        <img src="../test/logo_pokemon.png" alt="Pokemon">
+    </div>
+
+    <div>
+        <form action="">
+            <label for="name">Nom :</label>
+            <input type="text" id="name"/>
+
+            <label for="type-select">Type :</label>
+            <select name="type" id="type-select"></select>
+
+            
+        </form>
+    </div>
+
+
+    <div class="listePokemon">
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>NOM</th>
+                <th>GÉNÉRATION</th>
+                <th>TYPES</th>
+                <th>ENDURANCE</th>
+                <th>ATTAQUE</th>
+                <th>DÉFENSE</th>
+                <th>IMAGE</th>
+            </thead>
+            <tbody id="tablo">
+                <!-- Complété par le script JS 'script_v4.js'-->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="btnGroup">
+        <button class="bouton" id="precedent" href="#precedent">PREC</button>
+        <span id="page"></span>
+        <button class="bouton" id="suivant" href="#suivant">SUIV</button>
+    </div>
+
+    <div class="bulle" id="tooltip">
+        <img id="tooltipImage"> 
+    </div>
+
+</body>
+</html>
+
+<!-- Notre script -->
+<script src="./script_v4.js" defer></script>
