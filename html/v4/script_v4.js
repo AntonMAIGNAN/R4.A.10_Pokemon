@@ -628,8 +628,22 @@ for(let [type, object] of allTypes){
     let option = document.createElement("option");
     option.classList.add("option");
     option.setAttribute("value", type.toLowerCase());
-    option.setAttribute("style", "background-repeat: no-repeat; width:100px; height:100px;")
-    option.style.backgroundImage = `url(\"../webp/types/${type}.png\")`;
+    let color = definirCouleur(type);
+    option.textContent = type;
+    option.addEventListener("mouseenter", ()=>{
+        option.style.backgroundColor = color;
+    })
+    option.addEventListener("mouseout", ()=>{
+        option.style.backgroundColor = 'transparent';
+    })
     typeSelect.appendChild(option);
 }
 
+var genSelect = document.getElementById("gen-select");
+for(let generation of Pokemon.all_generations){
+    let option = document.createElement("option");
+    option.classList.add("option");
+    option.setAttribute("value", generation);
+    option.textContent = "GEN " + generation;
+    genSelect.appendChild(option);
+}

@@ -1,5 +1,6 @@
 class Pokemon{
     static all_pokemons = new Map();
+    static all_generations = [];
 
     constructor (gen, base_attack, base_defense, base_stamina, pokemon_id, pokemon_name, type1, type2=null, attaques_chargees, attaques_rapides) {
         this._form = 'Normal';
@@ -46,6 +47,9 @@ class Pokemon{
                             for (let genPoke of gen) {
                                 if (genPoke["id"] == pokemon["pokemon_id"]) {
                                     generationDuPokemon = i; // Marquer que le Pokémon est trouvé
+                                    if (!(this.all_generations.includes(generationDuPokemon))){
+                                        this.all_generations.push(generationDuPokemon);
+                                    }
                                     break; // Sortir de la boucle dès que le Pokémon est trouvé
                                 }
                             }
@@ -53,6 +57,8 @@ class Pokemon{
                             if (generationDuPokemon) {
                                 break; // Sortir de la boucle externe si le Pokémon est trouvé
                             }
+
+                            
                         }
 
                         function genererAttaques(/*type1, type2=null*/){

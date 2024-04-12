@@ -277,9 +277,43 @@ tbody > tr:nth-of-type(even) {
   margin-top: 10px;
 }
 
-.option{
+.option:hover{
+  cursor: pointer;
+  background-color: rgb(190, 245, 169);
+  color: black;
 }
 
+.option:checked{
+  box-shadow: 0 0 1em 100px rgb(132, 179, 113) inset;
+}
+
+.option{
+  padding: 2px 10px;
+}
+
+#type-select::-webkit-scrollbar, #gen-select::-webkit-scrollbar{
+  width: 0;
+}
+
+#type-select, #gen-select{
+  position: absolute;
+  z-index: 10;
+}
+
+.champ{
+  margin-right: 75px;
+  margin-left: 25px;
+}
+
+input{
+  border-style: none none solid none; 
+}
+
+.containerFiltre{
+  display: flex;
+  justify-content: center;
+  margin: 2em;
+}
 
 @media only screen and (max-width: 700px){
   table, thead, tbody, tr, th, td {
