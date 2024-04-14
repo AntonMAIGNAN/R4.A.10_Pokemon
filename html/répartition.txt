@@ -1,0 +1,7 @@
+répartition du travail:
+
+v1 : 50% / 50%
+v2 : 50% / 50%
+v3 : 50% / 50%
+v4 : 80% Anton / 20% Elise
+v5 : 80% Elise / 20% Anton

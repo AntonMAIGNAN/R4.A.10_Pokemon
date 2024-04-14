@@ -702,7 +702,7 @@ function filtrageCombine() {
 
     // Filtrer en fonction du nom saisi dans le champ nom
     if (nom.value !== '') {
-        pokemonsFiltres = new Map([...pokemonsFiltres.entries()].filter(([_, pokemon]) => pokemon._pokemon_name.includes(nom.value)));
+        pokemonsFiltres = new Map([...pokemonsFiltres.entries()].filter(([_, pokemon]) => pokemon._pokemon_name.toLowerCase().includes(nom.value.toLowerCase())));
     }
 
     // Mettre à jour maxPage et PAGE
