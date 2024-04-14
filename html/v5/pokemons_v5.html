@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Incroyable</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- les datas des JSONS -->
+    <script src="../data/pokemons.js"></script>
+    <script src="../data/charged_moves.js"></script>
+    <script src="../data/cp_multiplier.js"></script>
+    <script src="../data/fast_moves.js"></script>
+    <script src="../data/generation.js"></script>
+    <script src="../data/pokemon_moves.js"></script>
+    <script src="../data/pokemon_type.js"></script> 
+    <script src="../data/type_effectiveness.js"></script>
+    <!-- Nos classes -->
+    <script src="../data/class_attack.js"></script>
+    <script src="../data/class_type.js"></script>
+    <script src="../data/class_pokemon.js"></script>
+</head>
+<body>
+    <div class="image-conteneur">
+        <img src="../test/logo_pokemon.png" alt="Pokemon">
+    </div>
+
+    <form action="" class="containerFiltre">
+
+        <div class="champ">
+            <label for="name" class="label">Nom</label>
+            <input type="text" id="name"/>
+        </div>
+            
+        <div class="champ type-champ">
+            <div style="display: flex; align-items: center;">
+                <label for="type-select" class="label">Type</label>
+                <div class="rond"></div>
+            </div>
+            <select name="type" id="type-select" onfocus='this.size=19;' onblur='this.size=0;' onchange='this.size=1; this.blur();'></select>        
+        </div>
+
+        <div class="champ">
+            <label for="gen-select" class="label">Génération</label>    
+            <select name="gen" id="gen-select" onfocus='this.size=9;' onblur='this.size=0;' onchange='this.size=1; this.blur();'></select>
+        </div>
+    </form>
+  
+
+
+    <div class="listePokemon">
+        <table>
+            <thead>
+                <th id="id">ID</th>
+                <th id="nom">NOM</th>
+                <th id="génération">GÉNÉRATION</th>
+                <th id="types">TYPES</th>
+                <th id="endurance">ENDURANCE</th>
+                <th id="attaque">ATTAQUE</th>
+                <th id="defense">DÉFENSE</th>
+                <th id="image">IMAGE</th>
+            </thead>
+            <tbody id="tablo">
+                <!-- Complété par le script JS 'script_v4.js'-->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="btnGroup">
+        <button class="bouton" id="precedent" href="#precedent">PREC</button>
+        <span id="page"></span>
+        <button class="bouton" id="suivant" href="#suivant">SUIV</button>
+    </div>
+
+    <div class="bulle" id="tooltip">
+        <img id="tooltipImage"> 
+    </div>
+
+</body>
+</html>
+
+<!-- Notre script -->
+<script src="./script_v5.js" defer></script>
