@@ -734,65 +734,6 @@ nom.addEventListener("input", () => {
 
 
 
-
-
-/*
-
-// Fonction générique pour trier la liste des Pokémon en fonction du critère spécifié
-function trierListePokemon(critere) {
-    // Obtenir les valeurs de la map allPokemons
-    const pokemonsArray = Array.from(allPokemons.values());
-
-    // Déterminer l'ordre de tri en fonction de l'état actuel
-    const triAscendant = table.getAttribute("data-sorted-col") === critere ? false : true;
-    console.log(critere);
-    // Trier les Pokémon en fonction du critère spécifié et de l'ordre de tri
-    pokemonsArray.sort((pokemonA, pokemonB) => {
-        const valeurA = critere === "TYPES" ? pokemonA[critere][0] : pokemonA[critere];
-        const valeurB = critere === "TYPES" ? pokemonB[critere][0] : pokemonB[critere];
-        
-        // Comparer les valeurs en fonction de l'ordre de tri
-        if (valeurA < valeurB) return triAscendant ? -1 : 1;
-        if (valeurA > valeurB) return triAscendant ? 1 : -1;
-        
-        // Si les valeurs sont égales, comparer les noms des Pokémon
-        const nomA = pokemonA["NOM"].toLowerCase();
-        const nomB = pokemonB["NOM"].toLowerCase();
-        return nomA.localeCompare(nomB);
-    });
-
-    // Inverser l'ordre si déjà trié sur la même colonne
-    if (!triAscendant) pokemonsArray.reverse();
-
-    // Mettre à jour l'indicateur de tri dans les en-têtes de tableau
-    mettreAJourIndicateurTri(table, critere, triAscendant);
-
-    // Réinitialiser la map allPokemons avec la nouvelle liste triée
-    allPokemons = new Map(pokemonsArray.map(pokemon => [pokemon["ID"], pokemon]));
-
-    // Afficher les Pokémon filtrés
-    displayPokemons(1);
-    verifDesactivation(1);
-    afficherNombrePage(1);
-
-    // Mettre à jour l'attribut data-sorted-col pour suivre la colonne de tri actuelle
-    table.setAttribute("data-sorted-col", critere);
-}
-
-// Fonction pour mettre à jour l'indicateur de tri dans les en-têtes de tableau
-function mettreAJourIndicateurTri(tableau, critere, triAscendant) {
-    const enTetes = tableau.querySelectorAll("th");
-    enTetes.forEach(enTete => {
-        if (enTete.dataset.label === critere) {
-            // Mettre à jour l'indicateur de tri en fonction de l'ordre de tri
-            enTete.innerHTML = triAscendant ? "&#9650;" : "&#9660;"; // Flèche vers le haut ou vers le bas
-        } else {
-            // Supprimer l'indicateur de tri des autres en-têtes
-            enTete.innerHTML = ""; // Pas de flèche
-        }
-    });
-}
- */
 var compt = 0;
 var click ="";
 
@@ -917,11 +858,11 @@ function trierListePokemon(critere, click) {
         }
     }else if (critere === "generation") {
         tab.sort((pokemonA, pokemonB) => {
+            //si génération est égale alors ordre alphabétique
             if (pokemonA[1]._generation === pokemonB[1]._generation) {
-                // En cas d'égalité de génération, trie par ordre alphabétique des noms
                 return pokemonA[1]._pokemon_name.localeCompare(pokemonB[1]._pokemon_name);
             } else {
-                // Sinon, trie par génération
+                // Sinon on trie par génération
                 if (click === "tri_decroissant") {
                     return pokemonB[1]._generation - pokemonA[1]._generation;
                 } else {
@@ -936,14 +877,14 @@ function trierListePokemon(critere, click) {
             } else {
                 return pokemonA[1].getTypes()[0]._type.localeCompare(pokemonB[1].getTypes()[0]._type);
             }
-        }); //si ils ont tous les 2 2 types et que leur 1er type son t égaux alors trier sur 2eme 
+        });
     }else if (critere === "endurance") {
         tab.sort((pokemonA, pokemonB) => {
+            //si la génération est égale alors on trie par ordre alphabétique
             if (pokemonA[1]._base_stamina === pokemonB[1]._base_stamina) {
-                // En cas d'égalité de génération, trie par ordre alphabétique des noms
                 return pokemonA[1]._pokemon_name.localeCompare(pokemonB[1]._pokemon_name);
             } else {
-                // Sinon, trie par génération
+                // Sinon on trie par endurance
                 if (click === "tri_decroissant") {
                     return pokemonB[1]._base_stamina - pokemonA[1]._base_stamina;
                 } else {
@@ -954,10 +895,10 @@ function trierListePokemon(critere, click) {
     } else if (critere === "attaque") {
         tab.sort((pokemonA, pokemonB) => {
             if (pokemonA[1]._base_attack === pokemonB[1]._base_attack) {
-                // En cas d'égalité de génération, trie par ordre alphabétique des noms
+                //si l'attaque est égale alors on trie par ordre alphabétique
                 return pokemonA[1]._pokemon_name.localeCompare(pokemonB[1]._pokemon_name);
             } else {
-                // Sinon, trie par génération
+                // Sinon on trie par attaque
                 if (click === "tri_decroissant") {
                     return pokemonB[1]._base_attack - pokemonA[1]._base_attack;
                 } else {
@@ -968,10 +909,10 @@ function trierListePokemon(critere, click) {
     } else if (critere === "defense") {
         tab.sort((pokemonA, pokemonB) => {
             if (pokemonA[1]._base_defense === pokemonB[1]._base_defense) {
-                // En cas d'égalité de génération, trie par ordre alphabétique des noms
+                //si la défense est égale alors on trie par ordre alphabétique
                 return pokemonA[1]._pokemon_name.localeCompare(pokemonB[1]._pokemon_name);
             } else {
-                // Sinon, trie par génération
+                // Sinon on trie par défense
                 if (click === "tri_decroissant") {
                     return pokemonB[1]._base_defense - pokemonA[1]._base_defense;
                 } else {
